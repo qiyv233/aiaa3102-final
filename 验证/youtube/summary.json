@@ -1,0 +1,155 @@
+[
+  {
+    "seed": 17,
+    "strategy": "fixed",
+    "selected": "balanced_char",
+    "split": "c6a783335b18789c8d8abd2964f52b4cf1f0ebc5fff9ea32f5cb3b5f84829343",
+    "status": "completed",
+    "actions": [
+      "char",
+      "word",
+      "balanced_char"
+    ],
+    "failures": [],
+    "seconds": 4.563,
+    "metric": "macro_f1",
+    "score": 0.9305338396247487,
+    "rows": 311
+  },
+  {
+    "seed": 17,
+    "strategy": "strong_fixed",
+    "selected": "balanced_char",
+    "split": "c6a783335b18789c8d8abd2964f52b4cf1f0ebc5fff9ea32f5cb3b5f84829343",
+    "status": "completed",
+    "actions": [
+      "char",
+      "union",
+      "balanced_char"
+    ],
+    "failures": [],
+    "seconds": 5.235,
+    "metric": "macro_f1",
+    "score": 0.9305338396247487,
+    "rows": 311
+  },
+  {
+    "seed": 17,
+    "strategy": "rule",
+    "selected": "nb_ratio",
+    "split": "c6a783335b18789c8d8abd2964f52b4cf1f0ebc5fff9ea32f5cb3b5f84829343",
+    "status": "completed",
+    "actions": [
+      "char",
+      "union",
+      "nb_ratio"
+    ],
+    "failures": [],
+    "seconds": 5.265,
+    "metric": "macro_f1",
+    "score": 0.9031475177457287,
+    "rows": 311
+  },
+  {
+    "seed": 43,
+    "strategy": "fixed",
+    "selected": "char",
+    "split": "3e262304b3cc997ba5ab221b420f84d353e4abcb62e9e99b0921e56a903f731f",
+    "status": "completed",
+    "actions": [
+      "char",
+      "word",
+      "balanced_char"
+    ],
+    "failures": [],
+    "seconds": 4.406,
+    "metric": "macro_f1",
+    "score": 0.9271445608654911,
+    "rows": 311
+  },
+  {
+    "seed": 43,
+    "strategy": "strong_fixed",
+    "selected": "union",
+    "split": "3e262304b3cc997ba5ab221b420f84d353e4abcb62e9e99b0921e56a903f731f",
+    "status": "completed",
+    "actions": [
+      "char",
+      "union",
+      "balanced_char"
+    ],
+    "failures": [],
+    "seconds": 6.015,
+    "metric": "macro_f1",
+    "score": 0.9169204466527756,
+    "rows": 311
+  },
+  {
+    "seed": 43,
+    "strategy": "rule",
+    "selected": "union",
+    "split": "3e262304b3cc997ba5ab221b420f84d353e4abcb62e9e99b0921e56a903f731f",
+    "status": "completed",
+    "actions": [
+      "char",
+      "union",
+      "nb_ratio"
+    ],
+    "failures": [],
+    "seconds": 5.969,
+    "metric": "macro_f1",
+    "score": 0.9169204466527756,
+    "rows": 311
+  },
+  {
+    "seed": 71,
+    "strategy": "fixed",
+    "selected": "word",
+    "split": "e6851dddd2a71435bfbbfb33c2724ca3a5121a2b8f7ee705ed4a98ce759d3000",
+    "status": "completed",
+    "actions": [
+      "char",
+      "word",
+      "balanced_char"
+    ],
+    "failures": [],
+    "seconds": 4.61,
+    "metric": "macro_f1",
+    "score": 0.8996774193548387,
+    "rows": 311
+  },
+  {
+    "seed": 71,
+    "strategy": "strong_fixed",
+    "selected": "union",
+    "split": "e6851dddd2a71435bfbbfb33c2724ca3a5121a2b8f7ee705ed4a98ce759d3000",
+    "status": "completed",
+    "actions": [
+      "char",
+      "union",
+      "balanced_char"
+    ],
+    "failures": [],
+    "seconds": 7.296,
+    "metric": "macro_f1",
+    "score": 0.9169204466527756,
+    "rows": 311
+  },
+  {
+    "seed": 71,
+    "strategy": "rule",
+    "selected": "union",
+    "split": "e6851dddd2a71435bfbbfb33c2724ca3a5121a2b8f7ee705ed4a98ce759d3000",
+    "status": "completed",
+    "actions": [
+      "char",
+      "union",
+      "nb_ratio"
+    ],
+    "failures": [],
+    "seconds": 8.093,
+    "metric": "macro_f1",
+    "score": 0.9169204466527756,
+    "rows": 311
+  }
+]

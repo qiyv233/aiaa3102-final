@@ -1,0 +1,3 @@
+{"candidate": "linear", "reason": "Use the predeclared modality-specific order.", "status": "ok", "score": 0.9765411893071467, "recall": {"0": 0.965034965034965, "1": 0.991304347826087}, "seconds": 0.031}
+{"candidate": "rbf", "reason": "Use the predeclared modality-specific order.", "status": "ok", "score": 1.0, "recall": {"0": 1.0, "1": 1.0}, "seconds": 0.016}
+{"candidate": "hist", "reason": "Use the predeclared modality-specific order.", "status": "ok", "score": 0.9763331702544031, "recall": {"0": 1.0, "1": 0.9478260869565217}, "seconds": 0.125}

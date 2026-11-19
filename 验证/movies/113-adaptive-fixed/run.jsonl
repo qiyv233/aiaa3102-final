@@ -1,0 +1,2 @@
+{"task": {"train": "train.csv", "test": "test.csv", "target": "label", "id": "id", "output": "probabilities", "metric": "macro_f1", "modality": "text", "seed": 113}, "strategy": "fixed", "pool": "adaptive", "split": "stratified", "candidates": ["char", "word", "balanced_char", "union", "nb_ratio"], "mode": "text", "seed": 113, "train_rows": 1200, "valid_rows": 400, "validation_sha256": "b15d5ce7f69498953bab069c757e40ba0f0657822b38d82e02adbdaf52768fb6"}
+{"selected": "word", "validation_score": 0.8524769495233631, "status": "completed", "seconds": 20.985}

@@ -1,0 +1,242 @@
+[
+  {
+    "domain": "amazon",
+    "scenario": "natural",
+    "strategy": "fixed",
+    "training_counts": {
+      "1": 997,
+      "0": 995
+    },
+    "test_n": 986,
+    "split": "c4ee067679dadfbd84e1d849f3eb5676010e885cacfa30a5cef3fd38bef92b2f",
+    "first_recall": {
+      "0": 0.7951807228915663,
+      "1": 0.7791164658634538
+    },
+    "second": "word",
+    "selected": "char",
+    "validation": 0.7871348613642595,
+    "macro_f1": 0.7707825872284397,
+    "positive_recall": 0.7678207739307535
+  },
+  {
+    "domain": "amazon",
+    "scenario": "natural",
+    "strategy": "rule",
+    "training_counts": {
+      "1": 997,
+      "0": 995
+    },
+    "test_n": 986,
+    "split": "c4ee067679dadfbd84e1d849f3eb5676010e885cacfa30a5cef3fd38bef92b2f",
+    "first_recall": {
+      "0": 0.7951807228915663,
+      "1": 0.7791164658634538
+    },
+    "second": "word",
+    "selected": "char",
+    "validation": 0.7871348613642595,
+    "macro_f1": 0.7707825872284397,
+    "positive_recall": 0.7678207739307535
+  },
+  {
+    "domain": "amazon",
+    "scenario": "stress",
+    "strategy": "fixed",
+    "training_counts": {
+      "0": 995,
+      "1": 199
+    },
+    "test_n": 986,
+    "split": "75a4446ea8ba9e5a27f3c546f02aaea57778ddfd547d76e9efbbf4bf0d6202a5",
+    "first_recall": {
+      "0": 1.0,
+      "1": 0.0
+    },
+    "second": "word",
+    "selected": "char",
+    "validation": 0.4543795620437956,
+    "macro_f1": 0.3454464988198269,
+    "positive_recall": 0.010183299389002037
+  },
+  {
+    "domain": "amazon",
+    "scenario": "stress",
+    "strategy": "rule",
+    "training_counts": {
+      "0": 995,
+      "1": 199
+    },
+    "test_n": 986,
+    "split": "75a4446ea8ba9e5a27f3c546f02aaea57778ddfd547d76e9efbbf4bf0d6202a5",
+    "first_recall": {
+      "0": 1.0,
+      "1": 0.0
+    },
+    "second": "balanced_char",
+    "selected": "balanced_char",
+    "validation": 0.709008097165992,
+    "macro_f1": 0.7232966893845083,
+    "positive_recall": 0.5743380855397149
+  },
+  {
+    "domain": "imdb",
+    "scenario": "natural",
+    "strategy": "fixed",
+    "training_counts": {
+      "0": 992,
+      "1": 990
+    },
+    "test_n": 996,
+    "split": "d7495242ad454cc2db61620e31271617c0d479cdd689d987f6843e01ee4fd6fb",
+    "first_recall": {
+      "0": 0.8145161290322581,
+      "1": 0.8024193548387096
+    },
+    "second": "word",
+    "selected": "word",
+    "validation": 0.8165315123061603,
+    "macro_f1": 0.7001720183486239,
+    "positive_recall": 0.5803212851405622
+  },
+  {
+    "domain": "imdb",
+    "scenario": "natural",
+    "strategy": "rule",
+    "training_counts": {
+      "0": 992,
+      "1": 990
+    },
+    "test_n": 996,
+    "split": "d7495242ad454cc2db61620e31271617c0d479cdd689d987f6843e01ee4fd6fb",
+    "first_recall": {
+      "0": 0.8145161290322581,
+      "1": 0.8024193548387096
+    },
+    "second": "word",
+    "selected": "word",
+    "validation": 0.8165315123061603,
+    "macro_f1": 0.7001720183486239,
+    "positive_recall": 0.5803212851405622
+  },
+  {
+    "domain": "imdb",
+    "scenario": "stress",
+    "strategy": "fixed",
+    "training_counts": {
+      "0": 992,
+      "1": 198
+    },
+    "test_n": 996,
+    "split": "b2d965f92dc2b51f619637ded9712240b99f329adc989f3a442ecc5397e3ca43",
+    "first_recall": {
+      "0": 1.0,
+      "1": 0.0
+    },
+    "second": "word",
+    "selected": "word",
+    "validation": 0.47465371469688794,
+    "macro_f1": 0.3465821812596006,
+    "positive_recall": 0.012048192771084338
+  },
+  {
+    "domain": "imdb",
+    "scenario": "stress",
+    "strategy": "rule",
+    "training_counts": {
+      "0": 992,
+      "1": 198
+    },
+    "test_n": 996,
+    "split": "b2d965f92dc2b51f619637ded9712240b99f329adc989f3a442ecc5397e3ca43",
+    "first_recall": {
+      "0": 1.0,
+      "1": 0.0
+    },
+    "second": "balanced_char",
+    "selected": "balanced_char",
+    "validation": 0.7670419011882427,
+    "macro_f1": 0.5992323550066829,
+    "positive_recall": 0.36947791164658633
+  },
+  {
+    "domain": "yelp",
+    "scenario": "natural",
+    "strategy": "fixed",
+    "training_counts": {
+      "0": 993,
+      "1": 989
+    },
+    "test_n": 996,
+    "split": "03f05e665c63a75db9785cd3a1a46bfeb31e0f5e0688eef563dc1269eb1902c1",
+    "first_recall": {
+      "0": 0.7590361445783133,
+      "1": 0.8259109311740891
+    },
+    "second": "word",
+    "selected": "word",
+    "validation": 0.8084295860826859,
+    "macro_f1": 0.7686247575953458,
+    "positive_recall": 0.7234468937875751
+  },
+  {
+    "domain": "yelp",
+    "scenario": "natural",
+    "strategy": "rule",
+    "training_counts": {
+      "0": 993,
+      "1": 989
+    },
+    "test_n": 996,
+    "split": "03f05e665c63a75db9785cd3a1a46bfeb31e0f5e0688eef563dc1269eb1902c1",
+    "first_recall": {
+      "0": 0.7590361445783133,
+      "1": 0.8259109311740891
+    },
+    "second": "word",
+    "selected": "word",
+    "validation": 0.8084295860826859,
+    "macro_f1": 0.7686247575953458,
+    "positive_recall": 0.7234468937875751
+  },
+  {
+    "domain": "yelp",
+    "scenario": "stress",
+    "strategy": "fixed",
+    "training_counts": {
+      "0": 993,
+      "1": 198
+    },
+    "test_n": 996,
+    "split": "44be3081f2c5acd3dcbb91ada5b2eb9e6bde213a18bfe54e176018067daf8939",
+    "first_recall": {
+      "0": 1.0,
+      "1": 0.02
+    },
+    "second": "word",
+    "selected": "char",
+    "validation": 0.47465371469688794,
+    "macro_f1": 0.36332831176431046,
+    "positive_recall": 0.028056112224448898
+  },
+  {
+    "domain": "yelp",
+    "scenario": "stress",
+    "strategy": "rule",
+    "training_counts": {
+      "0": 993,
+      "1": 198
+    },
+    "test_n": 996,
+    "split": "44be3081f2c5acd3dcbb91ada5b2eb9e6bde213a18bfe54e176018067daf8939",
+    "first_recall": {
+      "0": 1.0,
+      "1": 0.02
+    },
+    "second": "balanced_char",
+    "selected": "balanced_char",
+    "validation": 0.6389149468417761,
+    "macro_f1": 0.7096443539345507,
+    "positive_recall": 0.531062124248497
+  }
+]

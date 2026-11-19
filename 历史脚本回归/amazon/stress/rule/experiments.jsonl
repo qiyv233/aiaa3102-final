@@ -1,0 +1,2 @@
+{"candidate": "char", "reason": "Explore the next available representation or estimator.", "status": "ok", "score": 0.4543795620437956, "recall": {"0": 1.0, "1": 0.0}, "seconds": 0.219}
+{"candidate": "balanced_char", "reason": "Previous validation showed low recall for at least one class.", "status": "ok", "score": 0.709008097165992, "recall": {"0": 0.891566265060241, "1": 0.54}, "seconds": 0.156}

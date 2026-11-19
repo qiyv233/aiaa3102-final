@@ -1,0 +1,3 @@
+{"candidate": "char", "reason": "Use the predeclared candidate order.", "status": "ok", "score": 0.9460023025706672, "recall": {"0": 0.9779005524861878, "1": 0.9127906976744186}, "seconds": 0.359}
+{"candidate": "word", "reason": "Use the predeclared candidate order.", "status": "ok", "score": 0.9574196038696292, "recall": {"0": 0.9779005524861878, "1": 0.936046511627907}, "seconds": 0.234}
+{"candidate": "balanced_char", "reason": "Use the predeclared candidate order.", "status": "ok", "score": 0.9403548296254576, "recall": {"0": 0.9668508287292817, "1": 0.9127906976744186}, "seconds": 0.188}

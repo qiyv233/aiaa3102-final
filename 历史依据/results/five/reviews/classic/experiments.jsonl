@@ -1,0 +1,3 @@
+{"candidate": "char", "reason": "Explore the next available representation or estimator.", "status": "ok", "score": 0.7439006045526433, "recall": {"0": 0.7550200803212851, "1": 0.7327935222672065}, "seconds": 0.265}
+{"candidate": "word", "reason": "Explore the next available representation or estimator.", "status": "ok", "score": 0.764088930082808, "recall": {"0": 0.7710843373493976, "1": 0.757085020242915}, "seconds": 0.235}
+{"candidate": "balanced_char", "reason": "Explore the next available representation or estimator.", "status": "ok", "score": 0.7439006045526433, "recall": {"0": 0.7550200803212851, "1": 0.7327935222672065}, "seconds": 0.156}

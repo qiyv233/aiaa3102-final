@@ -1,0 +1,2 @@
+{"candidate": "char", "reason": "Use the predeclared candidate order.", "status": "ok", "score": 0.4543795620437956, "recall": {"0": 1.0, "1": 0.0}, "seconds": 0.203}
+{"candidate": "word", "reason": "Use the predeclared candidate order.", "status": "ok", "score": 0.4543795620437956, "recall": {"0": 1.0, "1": 0.0}, "seconds": 0.094}

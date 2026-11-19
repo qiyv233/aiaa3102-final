@@ -1,0 +1,122 @@
+{
+  "prior": [
+    {
+      "task": "wine",
+      "pool": "classic",
+      "recalculated": 0.9635716361522814
+    },
+    {
+      "task": "wine",
+      "pool": "expanded",
+      "recalculated": 0.9635716361522814
+    },
+    {
+      "task": "wine",
+      "pool": "adaptive",
+      "recalculated": 0.9635716361522814
+    },
+    {
+      "task": "sms",
+      "pool": "classic",
+      "recalculated": 0.9683590875643855
+    },
+    {
+      "task": "sms",
+      "pool": "expanded",
+      "recalculated": 0.9499490760948639
+    },
+    {
+      "task": "sms",
+      "pool": "adaptive",
+      "recalculated": 0.9683590875643855
+    },
+    {
+      "task": "digits",
+      "pool": "classic",
+      "recalculated": 0.16196210030918406
+    },
+    {
+      "task": "digits",
+      "pool": "expanded",
+      "recalculated": 0.13546137977415
+    },
+    {
+      "task": "digits",
+      "pool": "adaptive",
+      "recalculated": 0.13598337033384197
+    },
+    {
+      "task": "reviews",
+      "pool": "classic",
+      "recalculated": 0.7686247575953458
+    },
+    {
+      "task": "reviews",
+      "pool": "expanded",
+      "recalculated": 0.7961105424769703
+    },
+    {
+      "task": "reviews",
+      "pool": "adaptive",
+      "recalculated": 0.7961105424769703
+    },
+    {
+      "task": "iris",
+      "pool": "classic",
+      "recalculated": 0.9777530589543938
+    },
+    {
+      "task": "iris",
+      "pool": "expanded",
+      "recalculated": 0.9777530589543938
+    },
+    {
+      "task": "iris",
+      "pool": "adaptive",
+      "recalculated": 0.9777530589543938
+    },
+    {
+      "task": "car",
+      "pool": "classic",
+      "recalculated": 0.8607913058244184
+    },
+    {
+      "task": "car",
+      "pool": "expanded",
+      "recalculated": 0.9634552611367128
+    },
+    {
+      "task": "car",
+      "pool": "categorical",
+      "recalculated": 0.8948029022162738
+    }
+  ],
+  "overlap": {
+    "bank": {
+      "train": 1029,
+      "test": 343,
+      "exact_matches": 9,
+      "scores_without_matches": {
+        "17-fixed": 0.9969832452693854,
+        "17-strong_fixed": 1.0,
+        "17-rule": 1.0,
+        "43-fixed": 1.0,
+        "43-strong_fixed": 1.0,
+        "43-rule": 1.0,
+        "71-fixed": 1.0,
+        "71-strong_fixed": 1.0,
+        "71-rule": 1.0
+      }
+    },
+    "youtube": {
+      "train": 1409,
+      "test": 311,
+      "exact_matches": 0
+    },
+    "cifar": {
+      "train": 720,
+      "test": 480,
+      "exact_matches": 0
+    }
+  }
+}

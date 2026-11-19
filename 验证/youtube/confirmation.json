@@ -1,0 +1,34 @@
+[
+  {
+    "task": "youtube",
+    "pool": "adaptive",
+    "seed": 113,
+    "strategy": "strong_fixed",
+    "score": 0.9169204466527756,
+    "selected": "union",
+    "split": "505070483a499f1e53652acab997ae489c085a1e8138fb9532b9c08dff633532",
+    "seconds": 7.656,
+    "actions": [
+      "char",
+      "union",
+      "balanced_char"
+    ],
+    "failed": 0
+  },
+  {
+    "task": "youtube",
+    "pool": "reviewed",
+    "seed": 113,
+    "strategy": "rule",
+    "score": 0.9169204466527756,
+    "selected": "union",
+    "split": "505070483a499f1e53652acab997ae489c085a1e8138fb9532b9c08dff633532",
+    "seconds": 7.281,
+    "actions": [
+      "char",
+      "word",
+      "union"
+    ],
+    "failed": 0
+  }
+]

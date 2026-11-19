@@ -1,0 +1,2 @@
+{"candidate": "color", "reason": "Use the predeclared candidate order.", "status": "ok", "score": 1.3567868084335908, "recall": {"0": 0.5555555555555556, "1": 0.5555555555555556, "2": 0.6666666666666666, "3": 0.5333333333333333}, "seconds": 0.453}
+{"candidate": "resnet18", "reason": "Use the predeclared candidate order.", "status": "ok", "score": 0.2280747192757961, "recall": {"0": 0.8888888888888888, "1": 1.0, "2": 0.9111111111111111, "3": 0.8888888888888888}, "seconds": 8.766}

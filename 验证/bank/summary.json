@@ -1,0 +1,155 @@
+[
+  {
+    "seed": 17,
+    "strategy": "fixed",
+    "selected": "trees",
+    "split": "8980089f1b17e378d1e84761eae3754e559a4c689001e17d633244c7f209a680",
+    "status": "completed",
+    "actions": [
+      "linear",
+      "trees",
+      "balanced_linear"
+    ],
+    "failures": [],
+    "seconds": 3.703,
+    "metric": "macro_f1",
+    "score": 0.9970483197796998,
+    "rows": 343
+  },
+  {
+    "seed": 17,
+    "strategy": "strong_fixed",
+    "selected": "rbf",
+    "split": "8980089f1b17e378d1e84761eae3754e559a4c689001e17d633244c7f209a680",
+    "status": "completed",
+    "actions": [
+      "linear",
+      "rbf",
+      "hist"
+    ],
+    "failures": [],
+    "seconds": 3.469,
+    "metric": "macro_f1",
+    "score": 1.0,
+    "rows": 343
+  },
+  {
+    "seed": 17,
+    "strategy": "rule",
+    "selected": "rbf",
+    "split": "8980089f1b17e378d1e84761eae3754e559a4c689001e17d633244c7f209a680",
+    "status": "completed",
+    "actions": [
+      "linear",
+      "rbf",
+      "hist"
+    ],
+    "failures": [],
+    "seconds": 3.688,
+    "metric": "macro_f1",
+    "score": 1.0,
+    "rows": 343
+  },
+  {
+    "seed": 43,
+    "strategy": "fixed",
+    "selected": "trees",
+    "split": "5dd6e0b79936e27603fc6ddbe49ea8883a5c1b6e5b74ff0871e0be68bedc07ea",
+    "status": "completed",
+    "actions": [
+      "linear",
+      "trees",
+      "balanced_linear"
+    ],
+    "failures": [],
+    "seconds": 3.813,
+    "metric": "macro_f1",
+    "score": 1.0,
+    "rows": 343
+  },
+  {
+    "seed": 43,
+    "strategy": "strong_fixed",
+    "selected": "rbf",
+    "split": "5dd6e0b79936e27603fc6ddbe49ea8883a5c1b6e5b74ff0871e0be68bedc07ea",
+    "status": "completed",
+    "actions": [
+      "linear",
+      "rbf",
+      "hist"
+    ],
+    "failures": [],
+    "seconds": 3.562,
+    "metric": "macro_f1",
+    "score": 1.0,
+    "rows": 343
+  },
+  {
+    "seed": 43,
+    "strategy": "rule",
+    "selected": "rbf",
+    "split": "5dd6e0b79936e27603fc6ddbe49ea8883a5c1b6e5b74ff0871e0be68bedc07ea",
+    "status": "completed",
+    "actions": [
+      "linear",
+      "rbf",
+      "hist"
+    ],
+    "failures": [],
+    "seconds": 3.75,
+    "metric": "macro_f1",
+    "score": 1.0,
+    "rows": 343
+  },
+  {
+    "seed": 71,
+    "strategy": "fixed",
+    "selected": "trees",
+    "split": "0058852195d2a2fa804e5634350f5d36ad1169e7ff99510a631d1cf063ba632d",
+    "status": "completed",
+    "actions": [
+      "linear",
+      "trees",
+      "balanced_linear"
+    ],
+    "failures": [],
+    "seconds": 3.719,
+    "metric": "macro_f1",
+    "score": 1.0,
+    "rows": 343
+  },
+  {
+    "seed": 71,
+    "strategy": "strong_fixed",
+    "selected": "rbf",
+    "split": "0058852195d2a2fa804e5634350f5d36ad1169e7ff99510a631d1cf063ba632d",
+    "status": "completed",
+    "actions": [
+      "linear",
+      "rbf",
+      "hist"
+    ],
+    "failures": [],
+    "seconds": 3.516,
+    "metric": "macro_f1",
+    "score": 1.0,
+    "rows": 343
+  },
+  {
+    "seed": 71,
+    "strategy": "rule",
+    "selected": "rbf",
+    "split": "0058852195d2a2fa804e5634350f5d36ad1169e7ff99510a631d1cf063ba632d",
+    "status": "completed",
+    "actions": [
+      "linear",
+      "rbf",
+      "hist"
+    ],
+    "failures": [],
+    "seconds": 3.782,
+    "metric": "macro_f1",
+    "score": 1.0,
+    "rows": 343
+  }
+]

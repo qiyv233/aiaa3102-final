@@ -1,0 +1,35 @@
+{
+  "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "packages": {
+    "scikit-learn": "1.8.0",
+    "scipy": "1.17.1",
+    "pandas": "3.0.2",
+    "numpy": "2.4.3",
+    "joblib": "1.5.3",
+    "pillow": "12.1.1",
+    "torch": "2.5.1+cu121",
+    "torchvision": "0.20.1+cu121"
+  },
+  "optional_catboost": "1.2.8",
+  "source_sha256": {
+    "agent.py": "cfb2603871f6c92f73a08c821d8139d93375fbcd175075f5e7ba3ffa5384523f",
+    "budget.py": "1b4c49083797feef6586cf47a6ab31cb71c07f7315c5301d6e6c85012b3a6c04",
+    "compare_pools.py": "b191753cc5250389ef911c7162217f493c0c4cabc804dc297382e5b80931d936",
+    "demo.py": "e1f5ddf4d128d5b3434a8c6da128a2b9fb4af4e696ea6750eb7f1012f1f9f116",
+    "features.py": "6b8a12fdeafbcd2620c2b4fbf4177c90846f0f64bbaab4b7f17b3f1dcdf34ba1",
+    "planning.py": "37523287f7a0d0e2abac579278eec3d991b14cb9c386cd5e19c70d5b99e57027",
+    "reviews_study.py": "da81ba905f89901487f5f37e673c3f61e9a0519ddf55480ce7e85b78a09ec680",
+    "sms_study.py": "540aa45ce144a7f8c715d772ae41799a03feb2d07794c6af8116c1f5aa3cb672",
+    "start.py": "13f57b0ac9adb5426aeb1a38c235d0ddd4e4d34b56890d9819d2a41f873cdf00",
+    "submission.py": "d832a75c8203d8d2f7f99dbf53dea402a32bc1cdeb7de814bd65581e9bf462c1",
+    "transfer.py": "28723260df7b6338766dd429d2178bfda28fb6719757b593445c9a15a00a73a2",
+    "validation.py": "10aa4cd247fa0bd002aeacbe92d433351ae7bef21d3edfb09976a2ef067e7f2c",
+    "verify_framework.py": "d0541c6b64e3a6173189cba5b27345fad58287e7e776eb47c2a5f90590648e5d",
+    "advanced/benchmark.py": "e06e4c6407f7faa0e7093fabff2293a75f06f59eb7c2693b063ce86cf71061b4",
+    "advanced/cnn_ablation.py": "2378e9db30ae4f1a987ae39479ee4fce98e7395cb4dbf4c7e6484a0adac70307",
+    "advanced/engine.py": "8adbcc8595fb288ab8c31e8bfc12168596ad0887a8f2273622105299f6fcd16e",
+    "advanced/learners.py": "70fdd746bb7c54628a7334e0a088d32ae3bddb67439185884b5eee7cca9deb84",
+    "advanced/predict.py": "a9c85b378b7a58a8a3e36fdd4662b49199f869ecceaa7bda3adbed3a71430d34"
+  },
+  "evaluation": "locked external development splits; single seed; no live LLM"
+}

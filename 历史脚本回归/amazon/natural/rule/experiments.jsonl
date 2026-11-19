@@ -1,0 +1,2 @@
+{"candidate": "char", "reason": "Explore the next available representation or estimator.", "status": "ok", "score": 0.7871348613642595, "recall": {"0": 0.7951807228915663, "1": 0.7791164658634538}, "seconds": 0.313}
+{"candidate": "word", "reason": "Explore the next available representation or estimator.", "status": "ok", "score": 0.7690753740882167, "recall": {"0": 0.7670682730923695, "1": 0.7710843373493976}, "seconds": 0.14}

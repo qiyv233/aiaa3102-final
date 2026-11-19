@@ -1,0 +1,59 @@
+[
+  {
+    "task": "car",
+    "pool": "classic",
+    "model": "trees",
+    "status": "completed",
+    "seconds": 7.97,
+    "attempts": 3,
+    "actions": [
+      "linear",
+      "balanced_linear",
+      "trees"
+    ],
+    "failed": 0,
+    "split": "4becfe0ad39e6ec9208fb16e2a84292b64abefab96ca42d0c27984afe4406f8b",
+    "replay_sha256": "dad8a9f0356d34cec94ef0dd2aa1ea58f759f8cfa12586f0d0b29319b42a6626",
+    "metric": "macro_f1",
+    "score": 0.860791,
+    "rows": 432
+  },
+  {
+    "task": "car",
+    "pool": "expanded",
+    "model": "rbf",
+    "status": "completed",
+    "seconds": 8.03,
+    "attempts": 3,
+    "actions": [
+      "linear",
+      "balanced_linear",
+      "rbf"
+    ],
+    "failed": 0,
+    "split": "4becfe0ad39e6ec9208fb16e2a84292b64abefab96ca42d0c27984afe4406f8b",
+    "replay_sha256": "ee8c873b36d390cc0a23bb432938b0aa5da9525cfb3186f9f456b09e173ebd8b",
+    "metric": "macro_f1",
+    "score": 0.963455,
+    "rows": 432
+  },
+  {
+    "task": "car",
+    "pool": "categorical",
+    "model": "catboost",
+    "status": "completed",
+    "seconds": 20.67,
+    "attempts": 3,
+    "actions": [
+      "linear",
+      "balanced_linear",
+      "catboost"
+    ],
+    "failed": 0,
+    "split": "4becfe0ad39e6ec9208fb16e2a84292b64abefab96ca42d0c27984afe4406f8b",
+    "replay_sha256": "d3f4683a617fe853334b8c42d2fb520b5b2218f94aa171b9fe16bb2de4941aa5",
+    "metric": "macro_f1",
+    "score": 0.894803,
+    "rows": 432
+  }
+]

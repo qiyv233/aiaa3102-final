@@ -1,0 +1,3 @@
+{"candidate": "color", "reason": "Use the predeclared modality-specific order.", "status": "ok", "score": 1.2767988149860134, "recall": {"0": 0.4444444444444444, "1": 0.6444444444444445, "2": 0.6222222222222222, "3": 0.37777777777777777}, "seconds": 0.39}
+{"candidate": "gradient_svm", "reason": "Use the predeclared modality-specific order.", "status": "ok", "score": 0.6331787570422166, "recall": {"0": 0.7333333333333333, "1": 0.8888888888888888, "2": 0.5555555555555556, "3": 0.7777777777777778}, "seconds": 0.594}
+{"candidate": "cnn", "reason": "Use the predeclared modality-specific order.", "status": "ok", "score": 0.8645982430927537, "recall": {"0": 0.5333333333333333, "1": 0.8666666666666667, "2": 0.6666666666666666, "3": 0.4888888888888889}, "seconds": 6.719}

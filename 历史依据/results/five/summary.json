@@ -1,0 +1,287 @@
+[
+  {
+    "task": "wine",
+    "pool": "classic",
+    "model": "linear",
+    "status": "completed",
+    "seconds": 6.89,
+    "attempts": 3,
+    "actions": [
+      "linear",
+      "trees",
+      "balanced_linear"
+    ],
+    "failed": 0,
+    "split": "44e43cf23378f1c55146cf1a32c5a06092ee00e63c41f719e2214e821b0a9e2b",
+    "replay_sha256": "c90e62c07b49644db2dbd8c0d39afb97aed845235d2b973e8ddf74f08d2f7c3d",
+    "metric": "macro_f1",
+    "score": 0.963572,
+    "rows": 54
+  },
+  {
+    "task": "wine",
+    "pool": "expanded",
+    "model": "linear",
+    "status": "completed",
+    "seconds": 6.88,
+    "attempts": 3,
+    "actions": [
+      "linear",
+      "rbf",
+      "hist"
+    ],
+    "failed": 0,
+    "split": "44e43cf23378f1c55146cf1a32c5a06092ee00e63c41f719e2214e821b0a9e2b",
+    "replay_sha256": "c90e62c07b49644db2dbd8c0d39afb97aed845235d2b973e8ddf74f08d2f7c3d",
+    "metric": "macro_f1",
+    "score": 0.963572,
+    "rows": 54
+  },
+  {
+    "task": "wine",
+    "pool": "adaptive",
+    "model": "linear",
+    "status": "completed",
+    "seconds": 7.36,
+    "attempts": 3,
+    "actions": [
+      "linear",
+      "rbf",
+      "hist"
+    ],
+    "failed": 0,
+    "split": "44e43cf23378f1c55146cf1a32c5a06092ee00e63c41f719e2214e821b0a9e2b",
+    "replay_sha256": "c90e62c07b49644db2dbd8c0d39afb97aed845235d2b973e8ddf74f08d2f7c3d",
+    "metric": "macro_f1",
+    "score": 0.963572,
+    "rows": 54
+  },
+  {
+    "task": "sms",
+    "pool": "classic",
+    "model": "balanced_char",
+    "status": "completed",
+    "seconds": 8.75,
+    "attempts": 3,
+    "actions": [
+      "char",
+      "word",
+      "balanced_char"
+    ],
+    "failed": 0,
+    "split": "a06723274171443d3f65ea7cb96ef93b3407dfedd5bac0d2420276478367bab0",
+    "replay_sha256": "af3394b0e343e4169ecbb91366793c9e247e58917bb1db7e39d2c0db09d8b768",
+    "metric": "macro_f1",
+    "score": 0.968359,
+    "rows": 1032
+  },
+  {
+    "task": "sms",
+    "pool": "expanded",
+    "model": "union",
+    "status": "completed",
+    "seconds": 11.84,
+    "attempts": 3,
+    "actions": [
+      "char",
+      "union",
+      "nb_ratio"
+    ],
+    "failed": 0,
+    "split": "a06723274171443d3f65ea7cb96ef93b3407dfedd5bac0d2420276478367bab0",
+    "replay_sha256": "518dcb1a0002e6fda36ac9fd08acac719fe57aa9fbad8887d5e0333c7399f8ae",
+    "metric": "macro_f1",
+    "score": 0.949949,
+    "rows": 1032
+  },
+  {
+    "task": "sms",
+    "pool": "adaptive",
+    "model": "balanced_char",
+    "status": "completed",
+    "seconds": 10.26,
+    "attempts": 3,
+    "actions": [
+      "char",
+      "union",
+      "balanced_char"
+    ],
+    "failed": 0,
+    "split": "a06723274171443d3f65ea7cb96ef93b3407dfedd5bac0d2420276478367bab0",
+    "replay_sha256": "af3394b0e343e4169ecbb91366793c9e247e58917bb1db7e39d2c0db09d8b768",
+    "metric": "macro_f1",
+    "score": 0.968359,
+    "rows": 1032
+  },
+  {
+    "task": "digits",
+    "pool": "classic",
+    "model": "balanced_gradient",
+    "status": "completed",
+    "seconds": 10.62,
+    "attempts": 3,
+    "actions": [
+      "color",
+      "gradient",
+      "balanced_gradient"
+    ],
+    "failed": 0,
+    "split": "167c6b240d885a62354b116aa3d44f828b738213cd1682545216009cd303ca7c",
+    "replay_sha256": "4c01dbc57e8e03288a918da0db66edc886af92b5c9976b1810f51cf07c42dde3",
+    "metric": "log_loss",
+    "score": 0.161962,
+    "rows": 638
+  },
+  {
+    "task": "digits",
+    "pool": "expanded",
+    "model": "cnn",
+    "status": "completed",
+    "seconds": 21.81,
+    "attempts": 3,
+    "actions": [
+      "color",
+      "gradient_svm",
+      "cnn"
+    ],
+    "failed": 0,
+    "split": "167c6b240d885a62354b116aa3d44f828b738213cd1682545216009cd303ca7c",
+    "replay_sha256": "f242d7c8825d8c34437857ac7d0e25bfedb85916584f03696ce20b58f8a1ada5",
+    "metric": "log_loss",
+    "score": 0.135461,
+    "rows": 638
+  },
+  {
+    "task": "digits",
+    "pool": "adaptive",
+    "model": "cnn",
+    "status": "completed",
+    "seconds": 21.47,
+    "attempts": 3,
+    "actions": [
+      "color",
+      "gradient_svm",
+      "cnn"
+    ],
+    "failed": 0,
+    "split": "167c6b240d885a62354b116aa3d44f828b738213cd1682545216009cd303ca7c",
+    "replay_sha256": "aab8338b57cbe056793a3ca9ab33b56da71cbd4f5f611cedbebce06da0e912a8",
+    "metric": "log_loss",
+    "score": 0.135983,
+    "rows": 638
+  },
+  {
+    "task": "reviews",
+    "pool": "classic",
+    "model": "word",
+    "status": "completed",
+    "seconds": 7.55,
+    "attempts": 3,
+    "actions": [
+      "char",
+      "word",
+      "balanced_char"
+    ],
+    "failed": 0,
+    "split": "b685c5cfe2e79463fa1e36aa256f7a837a6358f20c0d629f399c199718602352",
+    "replay_sha256": "00db4d4a3dc8be3bc826e7043e5c1abd4812542645c13d1c801397e50a0b4c35",
+    "metric": "macro_f1",
+    "score": 0.768625,
+    "rows": 996
+  },
+  {
+    "task": "reviews",
+    "pool": "expanded",
+    "model": "union",
+    "status": "completed",
+    "seconds": 8.75,
+    "attempts": 3,
+    "actions": [
+      "char",
+      "union",
+      "nb_ratio"
+    ],
+    "failed": 0,
+    "split": "b685c5cfe2e79463fa1e36aa256f7a837a6358f20c0d629f399c199718602352",
+    "replay_sha256": "83e0b62be408445446750d0f963fc1f3b0aa183b509eb707fe506c9995ecd430",
+    "metric": "macro_f1",
+    "score": 0.796111,
+    "rows": 996
+  },
+  {
+    "task": "reviews",
+    "pool": "adaptive",
+    "model": "union",
+    "status": "completed",
+    "seconds": 8.64,
+    "attempts": 3,
+    "actions": [
+      "char",
+      "union",
+      "nb_ratio"
+    ],
+    "failed": 0,
+    "split": "b685c5cfe2e79463fa1e36aa256f7a837a6358f20c0d629f399c199718602352",
+    "replay_sha256": "83e0b62be408445446750d0f963fc1f3b0aa183b509eb707fe506c9995ecd430",
+    "metric": "macro_f1",
+    "score": 0.796111,
+    "rows": 996
+  },
+  {
+    "task": "iris",
+    "pool": "classic",
+    "model": "linear",
+    "status": "completed",
+    "seconds": 7.28,
+    "attempts": 3,
+    "actions": [
+      "linear",
+      "trees",
+      "balanced_linear"
+    ],
+    "failed": 0,
+    "split": "33c16ef9001b62e9ccf0e3ee856130be8892543b2cbfe97c4b452ec15d8e5333",
+    "replay_sha256": "0cb905dc63d2edcf3ba73650bd0eaf041d073d94af1dfb280a7523b91fcd5c37",
+    "metric": "macro_f1",
+    "score": 0.977753,
+    "rows": 45
+  },
+  {
+    "task": "iris",
+    "pool": "expanded",
+    "model": "linear",
+    "status": "completed",
+    "seconds": 7.64,
+    "attempts": 3,
+    "actions": [
+      "linear",
+      "rbf",
+      "hist"
+    ],
+    "failed": 0,
+    "split": "33c16ef9001b62e9ccf0e3ee856130be8892543b2cbfe97c4b452ec15d8e5333",
+    "replay_sha256": "0cb905dc63d2edcf3ba73650bd0eaf041d073d94af1dfb280a7523b91fcd5c37",
+    "metric": "macro_f1",
+    "score": 0.977753,
+    "rows": 45
+  },
+  {
+    "task": "iris",
+    "pool": "adaptive",
+    "model": "linear",
+    "status": "completed",
+    "seconds": 7.75,
+    "attempts": 3,
+    "actions": [
+      "linear",
+      "rbf",
+      "hist"
+    ],
+    "failed": 0,
+    "split": "33c16ef9001b62e9ccf0e3ee856130be8892543b2cbfe97c4b452ec15d8e5333",
+    "replay_sha256": "0cb905dc63d2edcf3ba73650bd0eaf041d073d94af1dfb280a7523b91fcd5c37",
+    "metric": "macro_f1",
+    "score": 0.977753,
+    "rows": 45
+  }
+]

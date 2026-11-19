@@ -1,0 +1,34 @@
+[
+  {
+    "task": "cifar",
+    "pool": "adaptive",
+    "seed": 113,
+    "strategy": "strong_fixed",
+    "score": 0.7216917266104192,
+    "selected": "gradient_svm",
+    "split": "1322f529f028aefd58530026da5d7a8f788b2abb406f520ad65d032e5a9b9377",
+    "seconds": 14.062,
+    "actions": [
+      "color",
+      "gradient_svm",
+      "cnn"
+    ],
+    "failed": 0
+  },
+  {
+    "task": "cifar",
+    "pool": "reviewed",
+    "seed": 113,
+    "strategy": "rule",
+    "score": 0.21552993013503857,
+    "selected": "resnet18",
+    "split": "1322f529f028aefd58530026da5d7a8f788b2abb406f520ad65d032e5a9b9377",
+    "seconds": 24.547,
+    "actions": [
+      "color",
+      "resnet18",
+      "cnn"
+    ],
+    "failed": 0
+  }
+]

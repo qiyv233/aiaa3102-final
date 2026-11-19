@@ -1,0 +1,3 @@
+{"candidate": "char", "reason": "Use the predeclared baseline or tabular model order.", "status": "ok", "score": 0.9546126647380263, "recall": {"0": 0.9668508287292817, "1": 0.9418604651162791}, "seconds": 0.438}
+{"candidate": "word", "reason": "Compare word features with the character baseline.", "status": "ok", "score": 0.9375924140147862, "recall": {"0": 0.9502762430939227, "1": 0.9244186046511628}, "seconds": 0.109}
+{"candidate": "union", "reason": "Imbalanced counts=False, low validation recall=False.", "status": "ok", "score": 0.9603013945119208, "recall": {"0": 0.9668508287292817, "1": 0.9534883720930233}, "seconds": 0.969}

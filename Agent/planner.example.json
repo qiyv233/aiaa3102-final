@@ -1,0 +1,12 @@
+{
+  "endpoint": "",
+  "model": "",
+  "key_env": "DEEPSEEK_API_KEY",
+  "release_date": "",
+  "price_date": "2026-10-21",
+  "price_source": "",
+  "input_rmb_per_million": null,
+  "output_rmb_per_million": null,
+  "official_context_limit": null,
+  "max_output": 512
+}

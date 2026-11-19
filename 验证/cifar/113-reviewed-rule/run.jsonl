@@ -1,0 +1,2 @@
+{"task": {"train": "train.csv", "test": "test.csv", "target": "label", "id": "id", "output": "probabilities", "metric": "log_loss", "modality": "image", "seed": 113}, "strategy": "rule", "pool": "reviewed", "split": "stratified", "candidates": ["color", "gradient_svm", "resnet18", "cnn", "gradient"], "mode": "image", "seed": 113, "train_rows": 540, "valid_rows": 180, "validation_sha256": "1322f529f028aefd58530026da5d7a8f788b2abb406f520ad65d032e5a9b9377"}
+{"selected": "resnet18", "validation_score": 0.26671267599669485, "status": "completed", "seconds": 24.547}

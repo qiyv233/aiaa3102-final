@@ -1,0 +1,34 @@
+[
+  {
+    "task": "bank",
+    "pool": "adaptive",
+    "seed": 113,
+    "strategy": "strong_fixed",
+    "score": 1.0,
+    "selected": "rbf",
+    "split": "c3f0b7e382c18e0dda82b67148cb3aaef2d31aaec2ce811eca1b8f01da6974cc",
+    "seconds": 4.766,
+    "actions": [
+      "linear",
+      "rbf",
+      "hist"
+    ],
+    "failed": 0
+  },
+  {
+    "task": "bank",
+    "pool": "reviewed",
+    "seed": 113,
+    "strategy": "rule",
+    "score": 1.0,
+    "selected": "rbf",
+    "split": "c3f0b7e382c18e0dda82b67148cb3aaef2d31aaec2ce811eca1b8f01da6974cc",
+    "seconds": 4.547,
+    "actions": [
+      "linear",
+      "rbf",
+      "hist"
+    ],
+    "failed": 0
+  }
+]

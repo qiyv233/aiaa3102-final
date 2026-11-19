@@ -1,0 +1,2 @@
+{"task": {"train": "train.csv", "test": "test.csv", "id": "id", "target": "label", "modality": "table", "metric": "macro_f1", "output": "probabilities", "seed": 43}, "strategy": "rule", "pool": "adaptive", "split": "stratified", "candidates": ["linear", "trees", "balanced_linear", "rbf", "hist"], "mode": "table", "seed": 43, "train_rows": 93, "valid_rows": 31, "validation_sha256": "44e43cf23378f1c55146cf1a32c5a06092ee00e63c41f719e2214e821b0a9e2b"}
+{"selected": "linear", "validation_score": 1.0, "status": "completed", "seconds": 3.75}

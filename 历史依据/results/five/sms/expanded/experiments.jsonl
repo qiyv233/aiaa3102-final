@@ -1,0 +1,3 @@
+{"candidate": "char", "reason": "Explore the next available representation or estimator.", "status": "ok", "score": 0.9447762409408699, "recall": {"ham": 1.0, "spam": 0.8217054263565892}, "seconds": 0.61}
+{"candidate": "union", "reason": "Try a complementary model family using full training epochs.", "status": "ok", "score": 0.9581696991533057, "recall": {"ham": 0.9977851605758582, "spam": 0.875968992248062}, "seconds": 1.61}
+{"candidate": "nb_ratio", "reason": "Try a complementary model family using full training epochs.", "status": "ok", "score": 0.9293189080423123, "recall": {"ham": 0.9988925802879292, "spam": 0.7829457364341085}, "seconds": 0.328}

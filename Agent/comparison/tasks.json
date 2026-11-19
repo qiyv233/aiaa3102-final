@@ -1,0 +1,27 @@
+[
+  {
+    "name": "wine",
+    "manifest": "../examples/table/task.json",
+    "evaluation_labels": "wine-labels.csv"
+  },
+  {
+    "name": "sms",
+    "manifest": "../examples/text/task.json",
+    "evaluation_labels": "sms-labels.csv"
+  },
+  {
+    "name": "digits",
+    "manifest": "../examples/image/task.json",
+    "evaluation_labels": "digits-labels.csv"
+  },
+  {
+    "name": "reviews",
+    "manifest": "../comparison/reviews/task.json",
+    "evaluation_labels": "reviews-labels.csv"
+  },
+  {
+    "name": "iris",
+    "manifest": "iris/task.json",
+    "evaluation_labels": "iris-labels.csv"
+  }
+]

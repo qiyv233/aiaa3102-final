@@ -1,0 +1,203 @@
+[
+  {
+    "seed": 17,
+    "strategy": "fixed",
+    "selected": "color",
+    "split": "657c94baee145b73501f2f37619f657152ea58cc42969abb95e3410bf283ea20",
+    "status": "completed",
+    "actions": [
+      "color",
+      "gradient",
+      "balanced_gradient"
+    ],
+    "failures": [],
+    "seconds": 16.562,
+    "metric": "log_loss",
+    "score": 1.357622932852664,
+    "rows": 480
+  },
+  {
+    "seed": 17,
+    "strategy": "strong_fixed",
+    "selected": "gradient_svm",
+    "split": "657c94baee145b73501f2f37619f657152ea58cc42969abb95e3410bf283ea20",
+    "status": "completed",
+    "actions": [
+      "color",
+      "gradient_svm",
+      "cnn"
+    ],
+    "failures": [],
+    "seconds": 15.969,
+    "metric": "log_loss",
+    "score": 0.7218690759355239,
+    "rows": 480
+  },
+  {
+    "seed": 17,
+    "strategy": "rule",
+    "selected": "gradient_svm",
+    "split": "657c94baee145b73501f2f37619f657152ea58cc42969abb95e3410bf283ea20",
+    "status": "completed",
+    "actions": [
+      "color",
+      "balanced_gradient",
+      "gradient_svm"
+    ],
+    "failures": [],
+    "seconds": 8.063,
+    "metric": "log_loss",
+    "score": 0.7218690759355239,
+    "rows": 480
+  },
+  {
+    "seed": 17,
+    "strategy": "transfer",
+    "selected": "resnet18",
+    "split": "657c94baee145b73501f2f37619f657152ea58cc42969abb95e3410bf283ea20",
+    "status": "completed",
+    "actions": [
+      "color",
+      "resnet18"
+    ],
+    "failures": [],
+    "seconds": 23.016,
+    "metric": "log_loss",
+    "score": 0.21552993013503857,
+    "rows": 480
+  },
+  {
+    "seed": 43,
+    "strategy": "fixed",
+    "selected": "color",
+    "split": "5c858abfaa06598ef966c0fb879e1f24de3f0a6a7370f8f4cfcff14fe3442018",
+    "status": "completed",
+    "actions": [
+      "color",
+      "gradient",
+      "balanced_gradient"
+    ],
+    "failures": [],
+    "seconds": 6.266,
+    "metric": "log_loss",
+    "score": 1.357622932852664,
+    "rows": 480
+  },
+  {
+    "seed": 43,
+    "strategy": "strong_fixed",
+    "selected": "gradient_svm",
+    "split": "5c858abfaa06598ef966c0fb879e1f24de3f0a6a7370f8f4cfcff14fe3442018",
+    "status": "completed",
+    "actions": [
+      "color",
+      "gradient_svm",
+      "cnn"
+    ],
+    "failures": [],
+    "seconds": 13.469,
+    "metric": "log_loss",
+    "score": 0.7227014463484884,
+    "rows": 480
+  },
+  {
+    "seed": 43,
+    "strategy": "rule",
+    "selected": "gradient_svm",
+    "split": "5c858abfaa06598ef966c0fb879e1f24de3f0a6a7370f8f4cfcff14fe3442018",
+    "status": "completed",
+    "actions": [
+      "color",
+      "balanced_gradient",
+      "gradient_svm"
+    ],
+    "failures": [],
+    "seconds": 7.469,
+    "metric": "log_loss",
+    "score": 0.7227014463484884,
+    "rows": 480
+  },
+  {
+    "seed": 43,
+    "strategy": "transfer",
+    "selected": "resnet18",
+    "split": "5c858abfaa06598ef966c0fb879e1f24de3f0a6a7370f8f4cfcff14fe3442018",
+    "status": "completed",
+    "actions": [
+      "color",
+      "resnet18"
+    ],
+    "failures": [],
+    "seconds": 30.312,
+    "metric": "log_loss",
+    "score": 0.21552993013503857,
+    "rows": 480
+  },
+  {
+    "seed": 71,
+    "strategy": "fixed",
+    "selected": "color",
+    "split": "8b59f0c59e367bf9cd91196c3ca7eee79ded40ff7bb3f1c99a450c9bf6d5de8e",
+    "status": "completed",
+    "actions": [
+      "color",
+      "gradient",
+      "balanced_gradient"
+    ],
+    "failures": [],
+    "seconds": 8.234,
+    "metric": "log_loss",
+    "score": 1.357622932852664,
+    "rows": 480
+  },
+  {
+    "seed": 71,
+    "strategy": "strong_fixed",
+    "selected": "gradient_svm",
+    "split": "8b59f0c59e367bf9cd91196c3ca7eee79ded40ff7bb3f1c99a450c9bf6d5de8e",
+    "status": "completed",
+    "actions": [
+      "color",
+      "gradient_svm",
+      "cnn"
+    ],
+    "failures": [],
+    "seconds": 17.656,
+    "metric": "log_loss",
+    "score": 0.7211574304284656,
+    "rows": 480
+  },
+  {
+    "seed": 71,
+    "strategy": "rule",
+    "selected": "gradient_svm",
+    "split": "8b59f0c59e367bf9cd91196c3ca7eee79ded40ff7bb3f1c99a450c9bf6d5de8e",
+    "status": "completed",
+    "actions": [
+      "color",
+      "balanced_gradient",
+      "gradient_svm"
+    ],
+    "failures": [],
+    "seconds": 7.172,
+    "metric": "log_loss",
+    "score": 0.7211574304284656,
+    "rows": 480
+  },
+  {
+    "seed": 71,
+    "strategy": "transfer",
+    "selected": "resnet18",
+    "split": "8b59f0c59e367bf9cd91196c3ca7eee79ded40ff7bb3f1c99a450c9bf6d5de8e",
+    "status": "completed",
+    "actions": [
+      "color",
+      "resnet18"
+    ],
+    "failures": [],
+    "seconds": 24.718,
+    "metric": "log_loss",
+    "score": 0.21552993013503857,
+    "rows": 480
+  }
+]

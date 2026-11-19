@@ -1,0 +1,3 @@
+{"candidate": "linear", "reason": "Use the predeclared baseline or tabular model order.", "status": "ok", "score": 1.0, "recall": {"0": 1.0, "1": 1.0}, "seconds": 0.016}
+{"candidate": "rbf", "reason": "Use the predeclared baseline or tabular model order.", "status": "ok", "score": 0.9900677619975865, "recall": {"0": 1.0, "1": 0.9850746268656716}, "seconds": 0.015}
+{"candidate": "hist", "reason": "Use the predeclared baseline or tabular model order.", "status": "ok", "score": 0.9800373134328357, "recall": {"0": 0.975, "1": 0.9850746268656716}, "seconds": 0.188}

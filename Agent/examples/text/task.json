@@ -1,0 +1,9 @@
+{
+  "train": "train.csv",
+  "test": "test.csv",
+  "target": "label",
+  "id": "id",
+  "metric": "macro_f1",
+  "seed": 17,
+  "output": "label"
+}

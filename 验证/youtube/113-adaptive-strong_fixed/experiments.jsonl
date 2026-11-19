@@ -1,0 +1,3 @@
+{"candidate": "char", "reason": "Use the predeclared modality-specific order.", "status": "ok", "score": 0.9546126647380263, "recall": {"0": 0.9668508287292817, "1": 0.9418604651162791}, "seconds": 0.469}
+{"candidate": "union", "reason": "Use the predeclared modality-specific order.", "status": "ok", "score": 0.9603013945119208, "recall": {"0": 0.9668508287292817, "1": 0.9534883720930233}, "seconds": 1.094}
+{"candidate": "balanced_char", "reason": "Use the predeclared modality-specific order.", "status": "ok", "score": 0.9517856425501146, "recall": {"0": 0.9613259668508287, "1": 0.9418604651162791}, "seconds": 0.219}

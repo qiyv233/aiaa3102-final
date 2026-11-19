@@ -1,0 +1,1 @@
+{"train": "train.csv", "test": "test.csv", "id": "id", "target": "label", "modality": "image", "metric": "log_loss", "output": "probabilities", "seed": 43}

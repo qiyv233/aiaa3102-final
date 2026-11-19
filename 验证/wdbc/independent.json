@@ -1,0 +1,52 @@
+{
+  "train": 426,
+  "test": 143,
+  "overlapping_test_rows": 0,
+  "runs": [
+    {
+      "pool": "adaptive",
+      "strategy": "fixed",
+      "score": 0.970020964360587,
+      "selected": "linear",
+      "seconds": 4.078,
+      "status": "completed",
+      "attempts": [
+        "linear",
+        "trees",
+        "balanced_linear"
+      ],
+      "failures": [],
+      "split": "34c31b21b126b5ba86e26ddb695fefc92f14a69a1cd591c2485e7087cfd41e40"
+    },
+    {
+      "pool": "adaptive",
+      "strategy": "strong_fixed",
+      "score": 0.970020964360587,
+      "selected": "linear",
+      "seconds": 4.25,
+      "status": "completed",
+      "attempts": [
+        "linear",
+        "rbf",
+        "hist"
+      ],
+      "failures": [],
+      "split": "34c31b21b126b5ba86e26ddb695fefc92f14a69a1cd591c2485e7087cfd41e40"
+    },
+    {
+      "pool": "reviewed",
+      "strategy": "rule",
+      "score": 0.970020964360587,
+      "selected": "linear",
+      "seconds": 3.766,
+      "status": "completed",
+      "attempts": [
+        "linear",
+        "rbf",
+        "hist"
+      ],
+      "failures": [],
+      "split": "34c31b21b126b5ba86e26ddb695fefc92f14a69a1cd591c2485e7087cfd41e40"
+    }
+  ]
+}
