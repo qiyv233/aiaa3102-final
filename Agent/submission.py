@@ -3,14 +3,15 @@ import os
 from pathlib import Path
 
 import numpy as np
-import pandas as pd
+
+from task_data import load_csv
 
 
 def write_submission(frame, dest, template=None, id_column=None):
     if len(set(frame.columns)) != len(frame.columns) or frame.isna().any().any():
         raise ValueError("Duplicate output columns or missing predictions")
     if template is not None:
-        sample = pd.read_csv(template,dtype=str,keep_default_na=False)
+        sample = load_csv(template)
         if len(sample) != len(frame) or set(sample.columns) != set(frame.columns):
             raise ValueError("Output schema or row count differs from submission template")
         if id_column:

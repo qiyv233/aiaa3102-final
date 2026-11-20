@@ -25,6 +25,28 @@ Get-FileHash runs/bank01/predictions.csv,runs/bank01/replay.csv
 
 两个哈希应相同。重新训练时换一个新的输出目录。文本可换为 `验证/movies/task-113.json`，图像可换为 `验证/cifar/task-113.json`。已有结果在对应任务的 `113-reviewed-rule` 中。运行 `Agent/start.py table` 也可以练习读入、训练与模型重放。使用推荐策略时显式传 `--pool reviewed --strategy rule`，三次候选尝试为默认上限。
 
+## 运行课程已发布的两道题
+
+在仓库根目录运行以下命令，`--data` 指向课程发放的 `final_project_tasks.zip`。也可以传解压后包含 `final_project_tasks` 子目录的目录。两份任务清单只声明文件布局、字段、划分和指标。两题都用 `reviewed + rule`，全程离线。每次运行请为 `--out` 指定一个尚未创建的目录。
+
+```powershell
+$py = ".\.venv\Scripts\python.exe"
+$archive = "..\final_project_tasks.zip"
+& $py Agent/agent.py run --task tasks/headlines_ctr_clean.json --data $archive --pool reviewed --strategy rule --seconds 180 --evaluate-test --out runs/released-headlines
+& $py Agent/agent.py run --task tasks/in_vehicle_coupon_recommendation.json --data $archive --pool reviewed --strategy rule --seconds 180 --evaluate-test --out runs/released-coupons
+```
+
+两题都使用课程指定的训练和验证集。模型选定后，主进程才读取测试集、写出按原始行序排列的 `predictions.csv`，并在 `metrics.json` 中保存测试准确率。各目录还包括 `model.joblib`、`run.jsonl` 和 `experiments.jsonl`。优惠券清单启用了读取课程对象数组所需的 `allow_pickle_features`，仅对可信输入启用此选项。
+
+标题题用清单的 `pairwise: true` 声明二分类文本比较，`features` 的顺序就是 A、B 的顺序。Agent 比较共用词和字符词表的 TF-IDF 差值、写作风格比较以及两者的组合，并按官方验证得分自动选模。交换输入顺序时，两个标签的预测概率相互交换。开发时用 `--validation-only` 替换 `--evaluate-test` 可保留训练与选模日志，测试数据留到最终评估。
+
+模型带有输入字段和预处理信息。可以从原始特征文件重新生成预测，例如从课程 ZIP 重放优惠券模型。
+
+```powershell
+& $py Agent/agent.py predict --model runs/released-coupons/model.joblib --data $archive --input final_project_tasks/in_vehicle_coupon_recommendation/C_test.npy --output runs/released-coupons/replay.csv
+Get-FileHash runs/released-coupons/predictions.csv,runs/released-coupons/replay.csv
+```
+
 ## 图像环境
 
 本轮使用 torch 2.5.1+cu121、torchvision 0.20.1+cu121。需要重现图像迁移路线时，按设备选择兼容构建。下面为 CPU 环境示例。已安装合适版本的同学只需设置权重路径。CUDA 与 CPU 的运行时间和浮点结果可能不同。

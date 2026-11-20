@@ -13,11 +13,38 @@ from tempfile import TemporaryDirectory
 from unittest.mock import patch
 
 import pandas as pd
+import numpy as np
 
 import agent
 import budget
 import planning
+from paired_text import PAIR_CANDIDATES, pair_estimator
 from validation import split_rows
+
+
+def verify_pairwise(scratch, cli):
+    folder = scratch / "pairwise"
+    folder.mkdir()
+    pairs = [(f"Welcome to the bright park {i}!", f"Park notes from day {i}") for i in range(8)]
+    swapped = [(b, a) for a, b in pairs]
+    features = ["left", "right"]
+    frame = pd.DataFrame(pairs + swapped, columns=features)
+    labels = pd.Series(["1"] * len(pairs) + ["0"] * len(swapped))
+    reverse = frame[features[::-1]].set_axis(features, axis=1)
+    for name in PAIR_CANDIDATES:
+        model = pair_estimator(name, seed=17).fit(frame, labels)
+        np.testing.assert_allclose(model.predict_proba(frame), model.predict_proba(reverse)[:, ::-1])
+
+    frame.assign(label=labels).to_csv(folder / "train.csv", index=False)
+    spec = dict(train="train.csv", test="withheld.csv", features=features, target="label",
+                pairwise=True, metric="accuracy")
+    task = folder / "task.json"
+    task.write_text(json.dumps(spec), encoding="utf-8")
+    output = folder / "out"
+    subprocess.run(cli + ["run", "--task", str(task), "--out", str(output),
+                         "--strategy", "baseline", "--validation-only"], check=True)
+    assert (output / "model.joblib").is_file()
+    assert not (output / "predictions.csv").exists()
 
 
 def main():
@@ -30,6 +57,7 @@ def main():
                               "date":[str(i//2) for i in range(40)],"value":[i%5 for i in range(40)],
                               "label":[str(i%2) for i in range(40)]})
         cli=[sys.executable,str(root/"agent.py")]
+        verify_pairwise(scratch, cli)
         for kind,col in (("group","cluster"),("time","date")):
             spec=dict(train="train.csv",test="test.csv",id="id",target="label",split=kind,
                       metric="macro_f1",features=["value"])
@@ -98,7 +126,7 @@ def main():
         assert attempt("task-x","10").wait()!=0
         racers=[attempt("task-y","12"),attempt("task-y","12")]
         assert sorted(p.wait()==0 for p in racers)==[False,True]
-        print("PASS group/time CLI, partition isolation, sample submission order and replay, timeout checkpoint export, mocked usage, restart and concurrent budget cap")
+        print("PASS pairwise ordering and validation-only, group/time CLI, partition isolation, sample submission order and replay, timeout checkpoint export, mocked usage, restart and concurrent budget cap")
 
 
 if __name__=="__main__":
