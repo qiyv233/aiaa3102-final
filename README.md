@@ -8,7 +8,7 @@ AIAA 3102 期末项目。我们用同一个分类 Agent 处理表格、文本和
 
 仓库直接提供代码、整理后的示例、实验日志和预测。下文的首次表格训练可在克隆后直接运行。涉及历史模型、图像权重或原始归档的命令请在完整分享包中运行。文件校验清单对应完整包内的文件。
 
-先读同目录的《AIAA3102推荐方案与验证简报.docx》。本包是组会与开发材料。42 次本轮验证都有预测、逐候选日志和最终模型；另外保留了上一版 18 次对照的评分依据。三条研究方向和验收方式见简报第 3 页，成员可以自由认领。
+课程实测与当前入口见下方“整合版与课程任务”。早期组会材料见《AIAA3102推荐方案与验证简报.docx》。本包是组会与开发材料。42 次本轮验证都有预测、逐候选日志和最终模型；另外保留了上一版 18 次对照的评分依据。三条研究方向和验收方式见简报第 3 页，成员可以自由认领。
 
 ## 第一次运行
 
@@ -25,27 +25,36 @@ Get-FileHash runs/bank01/predictions.csv,runs/bank01/replay.csv
 
 两个哈希应相同。重新训练时换一个新的输出目录。文本可换为 `验证/movies/task-113.json`，图像可换为 `验证/cifar/task-113.json`。已有结果在对应任务的 `113-reviewed-rule` 中。运行 `Agent/start.py table` 也可以练习读入、训练与模型重放。使用推荐策略时显式传 `--pool reviewed --strategy rule`，三次候选尝试为默认上限。
 
-## 运行课程已发布的两道题
+## 整合版与课程任务
 
-在仓库根目录运行以下命令，`--data` 指向课程发放的 `final_project_tasks.zip`。也可以传解压后包含 `final_project_tasks` 子目录的目录。两份任务清单只声明文件布局、字段、划分和指标。两题都用 `reviewed + rule`，全程离线。每次运行请为 `--out` 指定一个尚未创建的目录。
+从仓库根目录运行。需要 64 位 Python 3.11，以及课程单独发放的 `final_project_tasks.zip`。训练阶段由 Agent 从 README 和训练文件识别目标、输入和指标，在训练分组上比较候选，确认后用全量训练数据拟合。两题的文件读取记录、选模理由、模型和逐行预测都保存在所指定的目录。
 
-```powershell
+~~~powershell
+py -3.11 -m venv .venv
 $py = ".\.venv\Scripts\python.exe"
-$archive = "..\final_project_tasks.zip"
-& $py Agent/agent.py run --task tasks/headlines_ctr_clean.json --data $archive --pool reviewed --strategy rule --seconds 180 --evaluate-test --out runs/released-headlines
-& $py Agent/agent.py run --task tasks/in_vehicle_coupon_recommendation.json --data $archive --pool reviewed --strategy rule --seconds 180 --evaluate-test --out runs/released-coupons
-```
+& $py -m pip install -r Agent/requirements.txt
+$archive = Read-Host '课程 ZIP 的完整路径'
+foreach ($task in 'headline','coupon') {
+    & $py run_course.py train $task --data $archive --runs runs/final
+    if ($LASTEXITCODE -ne 0) { throw "训练中止 $task" }
+    & $py run_course.py validate $task --data $archive --runs runs/final
+    if ($LASTEXITCODE -ne 0) { throw "验证中止 $task" }
+}
+~~~
 
-两题都使用课程指定的训练和验证集。模型选定后，主进程才读取测试集、写出按原始行序排列的 `predictions.csv`，并在 `metrics.json` 中保存测试准确率。各目录还包括 `model.joblib`、`run.jsonl` 和 `experiments.jsonl`。优惠券清单启用了读取课程对象数组所需的 `allow_pickle_features`，仅对可信输入启用此选项。
+标题按共享标题组成的连通组划分。纯词/字符 TF-IDF、带写作风格的混合模型及其概率平均，都可以用相同训练分组比较。优惠券按完整相同输入分组；出现重复属性组合时，Agent 可尝试结合属性、场景和券种的模型。模型替换要求四折总体准确率提升至少 0.5 个百分点、至少三折获胜，并在训练内另留的确认集再提升至少 0.5 个百分点。
 
-标题题用清单的 `pairwise: true` 声明二分类文本比较，`features` 的顺序就是 A、B 的顺序。Agent 比较共用词和字符词表的 TF-IDF 差值、写作风格比较以及两者的组合，并按官方验证得分自动选模。交换输入顺序时，两个标签的预测概率相互交换。开发时用 `--validation-only` 替换 `--evaluate-test` 可保留训练与选模日志，测试数据留到最终评估。
+只需预测时，可输入 CSV 或指向 ZIP 中的输入成员。两个课程模型都支持从同一个入口重放，输出标签和各类概率。下面用验证特征示例。
 
-模型带有输入字段和预处理信息。可以从原始特征文件重新生成预测，例如从课程 ZIP 重放优惠券模型。
+~~~powershell
+& $py Agent/agent.py predict --model runs/final/coupon/model.joblib --data $archive --input final_project_tasks/in_vehicle_coupon_recommendation/C_val.npy --output runs/coupon-replay.csv
+~~~
 
-```powershell
-& $py Agent/agent.py predict --model runs/released-coupons/model.joblib --data $archive --input final_project_tasks/in_vehicle_coupon_recommendation/C_test.npy --output runs/released-coupons/replay.csv
-Get-FileHash runs/released-coupons/predictions.csv,runs/released-coupons/replay.csv
-```
+正式评测时，已锁定的模型可以通过 `Agent/agent.py validate --split test --data ... --out ...` 对指定测试划分评分。日常训练与验证使用上面的两个命令。旧版 `run --task ... --validation-only` 和旧格式集成模型仍可用于重放分支对照。旧版 `run` 省略 `--validation-only` 会读取任务清单中的测试输入。
+
+对其他分类任务，可先运行 `Agent/agent.py inspect --data 数据目录 --out 新目录` 查看字段和指标依据，再用单独的新目录启动训练。也可直接运行 `Agent/agent.py develop --data 数据目录 --out 新目录 --provider local --strengthen --train-only`。多份 README 共存时用 `--readme` 指定其中一份。训练结果记录在 `result.json`，候选和反馈记录在 `events.jsonl`。可信课程对象数组通过包装命令显式启用。上述命令使用本地规划器。
+
+[整合取舍、验证成绩和复核命令](integration-review.md)
 
 ## 图像环境
 

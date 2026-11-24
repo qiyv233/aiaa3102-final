@@ -1,6 +1,7 @@
 """Split training rows using the evaluation structure declared by a task."""
 import pandas as pd
 from sklearn.model_selection import GroupShuffleSplit, train_test_split
+from paired_text import pair_groups
 
 
 def times(frame, column):
@@ -37,6 +38,16 @@ def split_rows(frame, spec, seed, supplied=None):
         cut = min(len(frame)-1, max(1, int(len(frame)*(1-fraction))))
         boundary = values.sort_values().iloc[cut]
         train, valid = frame.loc[values < boundary], frame.loc[values >= boundary]
+    elif spec.get("pairwise"):
+        groups = pair_groups(frame[spec["features"]])
+        labels = frame[spec["target"]]
+        splitter = GroupShuffleSplit(n_splits=24, test_size=fraction, random_state=seed)
+        for a, b in splitter.split(frame, groups=groups):
+            train, valid = frame.iloc[a], frame.iloc[b]
+            if train[spec["target"]].nunique() == labels.nunique() and valid[spec["target"]].nunique() == labels.nunique():
+                break
+        else:
+            raise ValueError("Unable to hold out independent text pairs covering the classes")
     else:
         train, valid = train_test_split(frame, test_size=fraction, random_state=seed,
                                          stratify=frame[spec["target"]])

@@ -1,8 +1,10 @@
 """Represent binary text comparisons with features that preserve the order of the pair."""
 
 import re
+import unicodedata
 
 import numpy as np
+import pandas as pd
 from scipy.sparse import hstack
 from sklearn.base import BaseEstimator, ClassifierMixin, TransformerMixin
 from sklearn.ensemble import HistGradientBoostingClassifier
@@ -30,6 +32,25 @@ def pair_texts(frame):
     return a, b
 
 
+def pair_groups(frame):
+    """Assign pairs to the same component whenever either text reappears."""
+    parents = {}
+
+    def root(value):
+        while value != parents.setdefault(value, value):
+            parents[value] = parents[parents[value]]
+            value = parents[value]
+        return value
+
+    pairs = [tuple(" ".join(unicodedata.normalize("NFKC", str(v)).casefold().split()) for v in row)
+             for row in frame.itertuples(index=False, name=None)]
+    for left, right in pairs:
+        a, b = root(left), root(right)
+        if a != b:
+            parents[max(a, b)] = min(a, b)
+    return pd.factorize(pd.Index([root(left) for left, _ in pairs]), sort=True)[0]
+
+
 class PairTfidf(TransformerMixin, BaseEstimator):
     """Fit vocabularies on both sides and return A minus B in the shared space."""
 
@@ -45,6 +66,20 @@ class PairTfidf(TransformerMixin, BaseEstimator):
     def transform(self, X):
         check_is_fitted(self, ("word_", "char_"))
         a, b = pair_texts(X)
+        # Repeated competitors have identical vectors. Preserve their original
+        # multiplicities for IDF fitting and restore both positions at prediction.
+        sides = np.concatenate((a, b))
+        index = dict.fromkeys(sides)
+        if sides.size and len(index) <= .85 * sides.size:
+            texts = list(index)
+            lookup = {value: i for i, value in enumerate(texts)}
+            left = [lookup[t] for t in a]
+            right = [lookup[t] for t in b]
+            blocks = []
+            for vectorizer in (self.word_, self.char_):
+                encoded = vectorizer.transform(texts)
+                blocks.append(encoded[left] - encoded[right])
+            return hstack(blocks, format="csr")
         return hstack([tfidf.transform(a) - tfidf.transform(b) for tfidf in (self.word_, self.char_)],
                       format="csr")
 

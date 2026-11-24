@@ -18,6 +18,7 @@ from features import infer_modality
 from planning import record, ask
 from budget import task_key
 from submission import write_submission
+from task_data import load_features
 
 
 def normalized(probs):
@@ -49,8 +50,8 @@ def find_mix(spec, y, labels, names, oof):
     return {n:s for n,s in ((a,w),(b,v)) if s},rank[0]
 
 
-def probabilities(package, file):
-    frame=load_csv(file)
+def probabilities(package, file, spec=None):
+    frame=load_features(file,{**package["schema"], **(spec or package.get("spec") or {})})
     X=inputs(frame,package["schema"],file.parent)
     scores={n:m.predict_proba(X) for n,m in package["models"].items()}
     result=sum(w*scores[n] for n,w in package["weights"].items())
@@ -178,7 +179,7 @@ def export(package,file,probs,spec,dest,template=None):
     import pandas as pd
     result=pd.DataFrame(index=range(len(probs)))
     if spec.get("id"):
-        result[spec["id"]]=load_csv(file)[spec["id"]]
+        result[spec["id"]]=load_features(file,{**package["schema"], **spec})[spec["id"]]
     labels=package["classes"]
     form=spec.get("output","label")
     outputs=([spec.get("probability_columns",{}).get(c,c) for c in labels] if form=="probabilities"

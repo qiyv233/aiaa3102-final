@@ -1,0 +1,8 @@
+Princeton WordNet 3.0
+The local compressed lookup is derived from the Princeton University dictionary. It stores one lexical file class and the first direct hypernym (where present) of a preferred sense per form. The upstream copyright notice and redistribution terms are in LICENSE in this folder.
+Lexicographer file documentation: https://wordnet.princeton.edu/documentation/lexnames5wn
+Distribution: https://raw.githubusercontent.com/nltk/nltk_data/gh-pages/packages/corpora/wordnet.zip
+Package index: https://raw.githubusercontent.com/nltk/nltk_data/gh-pages/index.xml
+Original archive SHA-256: cbda5ea6eef7f36a97a43d4a75f85e07fccbb4f23657d27b4ccbc93e2646ab59
+Compressed derived lookup SHA-256: ea49afb616e5778e539bd0cb89140bd5b4b773b5cc251625b2426034d0939022
+

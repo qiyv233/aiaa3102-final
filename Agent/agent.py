@@ -97,14 +97,16 @@ def predict(bundle, file, dest, template=None, *, score_test=False, label_file=N
                 result[name] = probs[:, i]
     else:
         raise ValueError("Unknown output format.")
-    write_submission(result,dest,template,cfg.get("id"))
+    metrics = None
     if score_test:
         y = load_labels(label_file, len(raw)) if label_file is not None else raw[cfg["target"]]
         if not y.isin(model.classes_).all():
             raise ValueError("Test labels contain a missing or unknown class")
         metric = cfg["metric"]
         score, _ = evaluate(metric, y, probs, model.classes_, cfg.get("positive_class"))
-        return dict(test_metric=metric, test_score=score, test_rows=len(y))
+        metrics = dict(test_metric=metric, test_score=score, test_rows=len(y))
+    write_submission(result,dest,template,cfg.get("id"))
+    return metrics
 
 
 def run(args):
@@ -130,7 +132,7 @@ def run_trials(args, cfg, root):
         raise ValueError("Missing labels or fewer than two classes.")
     seed = int(cfg.get("seed", 17))
     validation = files.get("validation")
-    train, valid = split_rows(raw, cfg, seed, load_labeled(validation, cfg) if validation else None)
+    train, valid = split_rows(raw, {**cfg, "features":features}, seed, load_labeled(validation, cfg) if validation else None)
     valid_root = validation[0].parent if validation else train_file.parent
     pairwise = cfg.get("pairwise", False)
     mode = cfg.get("modality") or ("text" if pairwise else infer_modality(train[features]))
@@ -306,8 +308,15 @@ def supervise(args):
 
 
 if __name__ == "__main__":
+    selection_dir = Path(__file__).resolve().parents[1] / "experiments" / "selection"
+    commands = {"inspect":"task_intake.py", "develop":"develop.py", "validate":"validate_model.py"}
+    if sys.argv[1:2] and sys.argv[1] in commands:
+        raise SystemExit(subprocess.call([sys.executable,"-B",str(selection_dir/commands[sys.argv[1]]),*sys.argv[2:]]))
     parser = argparse.ArgumentParser()
     sub = parser.add_subparsers(dest="command", required=True)
+    sub.add_parser("inspect", help="Infer the task from its documentation and training files")
+    sub.add_parser("develop", help="Select a model using grouped training folds and confirmation")
+    sub.add_parser("validate", help="Evaluate a locked model on its supplied validation split")
     r = sub.add_parser("run")
     r.add_argument("--task", required=True, type=Path)
     r.add_argument("--data", type=Path, help="Data directory or ZIP archive for task-relative paths")
@@ -350,15 +359,21 @@ if __name__ == "__main__":
     else:
         from advanced import learners
         sys.modules.setdefault("learners", learners)
+        sys.path.append(str(selection_dir))
         bundle = joblib.load(a.model)
         with data_root(a.data or Path.cwd()) as root:
             file = data_file(root, a.input) if a.data else a.input
             template = data_file(root, a.template) if a.data and a.template else a.template
-            if "weights" in bundle:
+            if "members" in bundle and "names" in bundle and "classes" in bundle:
+                if template:
+                    parser.error("Grouped checkpoints export prediction and per-class probabilities without a template")
+                from models import predict_file
+                predict_file(a.model,file,a.output,bundle=bundle)
+            elif "weights" in bundle:
                 from advanced.engine import probabilities, export
                 spec = read_json(a.task) if a.task else bundle.get("spec")
                 if spec is None:
                     raise ValueError("Pass --task for this historical ensemble")
-                export(bundle,file,probabilities(bundle,file),spec,a.output,template)
+                export(bundle,file,probabilities(bundle,file,spec),spec,a.output,template)
             else:
                 predict(bundle, file, a.output, template)
