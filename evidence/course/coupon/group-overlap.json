@@ -1,0 +1,50 @@
+{
+  "strategy": "complete_feature_row",
+  "field": null,
+  "groups": 7961,
+  "rows": 8117,
+  "checks": {
+    "pilot": {
+      "fit_rows": 3043,
+      "evaluated_rows": 1522,
+      "fit_groups": 2984,
+      "evaluated_groups": 1493,
+      "shared_groups": 0
+    },
+    "ranking_fold_0": {
+      "fit_rows": 4565,
+      "evaluated_rows": 1522,
+      "fit_groups": 4477,
+      "evaluated_groups": 1493,
+      "shared_groups": 0
+    },
+    "ranking_fold_1": {
+      "fit_rows": 4565,
+      "evaluated_rows": 1522,
+      "fit_groups": 4477,
+      "evaluated_groups": 1493,
+      "shared_groups": 0
+    },
+    "ranking_fold_2": {
+      "fit_rows": 4565,
+      "evaluated_rows": 1522,
+      "fit_groups": 4477,
+      "evaluated_groups": 1493,
+      "shared_groups": 0
+    },
+    "ranking_fold_3": {
+      "fit_rows": 4566,
+      "evaluated_rows": 1521,
+      "fit_groups": 4479,
+      "evaluated_groups": 1491,
+      "shared_groups": 0
+    },
+    "confirmation": {
+      "fit_rows": 6087,
+      "evaluated_rows": 2030,
+      "fit_groups": 5970,
+      "evaluated_groups": 1991,
+      "shared_groups": 0
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "metric": "accuracy",
+  "roles_sha256": "e62a65293d80a2ac02db96bffafbfad113d4a724802dd8b405ca0ef01bc07543",
+  "planning_fit_folds": [
+    2,
+    3
+  ],
+  "planning_feedback_fold": 1,
+  "ranking_folds": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "confirmation_fold": -1,
+  "min_winning_folds": 3,
+  "confirmation_ties": "retain incumbent",
+  "initial_reference": [
+    "pair_hybrid"
+  ],
+  "max_new_planning_actions": 3,
+  "repeat_seed": null,
+  "decision_check": "confirmation",
+  "minimum_gain": 0.005,
+  "scheduled": [],
+  "allowed_options": null
+}

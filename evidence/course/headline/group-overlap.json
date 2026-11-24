@@ -1,0 +1,50 @@
+{
+  "strategy": "connected_pairs",
+  "field": null,
+  "groups": 6119,
+  "rows": 8301,
+  "checks": {
+    "pilot": {
+      "fit_rows": 3112,
+      "evaluated_rows": 1557,
+      "fit_groups": 2229,
+      "evaluated_groups": 1157,
+      "shared_groups": 0
+    },
+    "ranking_fold_0": {
+      "fit_rows": 4669,
+      "evaluated_rows": 1556,
+      "fit_groups": 3386,
+      "evaluated_groups": 1162,
+      "shared_groups": 0
+    },
+    "ranking_fold_1": {
+      "fit_rows": 4668,
+      "evaluated_rows": 1557,
+      "fit_groups": 3391,
+      "evaluated_groups": 1157,
+      "shared_groups": 0
+    },
+    "ranking_fold_2": {
+      "fit_rows": 4668,
+      "evaluated_rows": 1557,
+      "fit_groups": 3425,
+      "evaluated_groups": 1123,
+      "shared_groups": 0
+    },
+    "ranking_fold_3": {
+      "fit_rows": 4670,
+      "evaluated_rows": 1555,
+      "fit_groups": 3442,
+      "evaluated_groups": 1106,
+      "shared_groups": 0
+    },
+    "confirmation": {
+      "fit_rows": 6225,
+      "evaluated_rows": 2076,
+      "fit_groups": 4548,
+      "evaluated_groups": 1571,
+      "shared_groups": 0
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "train": "final_project_tasks/headlines_ctr_clean/train.csv",
+  "validation": "final_project_tasks/headlines_ctr_clean/val.csv",
+  "test": "final_project_tasks/headlines_ctr_clean/test.csv",
+  "features": ["headline_A", "headline_B"],
+  "pairwise": true,
+  "target": "label_pairwise",
+  "modality": "text",
+  "metric": "accuracy",
+  "output": "label",
+  "seed": 113
+}

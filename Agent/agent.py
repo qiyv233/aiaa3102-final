@@ -15,10 +15,14 @@ import pandas as pd
 from sklearn.metrics import accuracy_score, f1_score, log_loss, recall_score, roc_auc_score
 from advanced.learners import candidate
 from budget import task_key
+from task_data import (
+    data_file, data_root, image_inputs, load_csv, load_features, load_labeled, load_labels, task_files,
+)
 from validation import split_rows
 from submission import write_submission, validate_probabilities
 
 from features import CANDIDATES, build, infer_modality
+from paired_text import PAIR_CANDIDATES, pair_estimator
 from planning import ask, record, rule
 
 
@@ -26,20 +30,12 @@ def read_json(path):
     return json.loads(path.read_text(encoding="utf-8-sig"))
 
 
-def load_csv(path):
-    # Preserve leading zeros in IDs and label names. Numeric features are converted later.
-    return pd.read_csv(path, dtype=str, keep_default_na=False)
-
-
 def inputs(raw, bundle, root):
     x = raw[bundle["features"]].copy()
     for col in bundle["numeric"]:
         x[col] = pd.to_numeric(x[col], errors="coerce").replace([np.inf, -np.inf], np.nan)
     if bundle["mode"] == "image":
-        if len(x.columns) != 1:
-            raise ValueError("Image manifests require one path column.")
-        col = x.columns[0]
-        x[col] = x[col].map(lambda p: str((root / p).resolve()))
+        return image_inputs(x, root)
     return x
 
 
@@ -70,9 +66,9 @@ def save(bundle, out):
     os.replace(tmp, out / "model.joblib")
 
 
-def predict(bundle, file, dest, template=None):
-    raw = load_csv(file)
+def predict(bundle, file, dest, template=None, *, score_test=False, label_file=None):
     model, cfg = bundle["model"], bundle["spec"]
+    raw = load_features(file, cfg)
     x = inputs(raw, bundle, file.parent)
     result = pd.DataFrame(index=raw.index)
     if cfg.get("id"):
@@ -96,34 +92,47 @@ def predict(bundle, file, dest, template=None):
                 result[name] = probs[:, i]
     else:
         raise ValueError("Unknown output format.")
+    metrics = None
+    if score_test:
+        y = load_labels(label_file, len(raw)) if label_file is not None else raw[cfg["target"]]
+        if not y.isin(model.classes_).all():
+            raise ValueError("Test labels contain a missing or unknown class")
+        metric = cfg["metric"]
+        score, _ = evaluate(metric, y, probs, model.classes_, cfg.get("positive_class"))
+        metrics = dict(test_metric=metric, test_score=score, test_rows=len(y))
     write_submission(result,dest,template,cfg.get("id"))
+    return metrics
 
 
 def run(args):
-    start = time.monotonic()
     cfg = read_json(args.task)
-    root = args.task.parent
-    train_file = root / cfg["train"]
-    raw = load_csv(train_file)
+    with data_root(getattr(args, "data", None) or args.task.parent) as root:
+        run_trials(args, cfg, root)
+
+
+def run_trials(args, cfg, root):
+    start = time.monotonic()
+    files = task_files(root, cfg)
+    train_file, _ = files["train"]
+    raw = load_labeled(files["train"], cfg)
     target = cfg["target"]
     reserved = {target, cfg.get("id"), cfg.get("group_column"), cfg.get("time_column")}
     features = cfg.get("features", [c for c in raw if c not in reserved])
     if reserved.intersection(features) or len(set(features)) != len(features):
         raise ValueError("Invalid or duplicated input features")
-    if cfg.get("test") and (root/cfg["test"]).resolve() in {train_file.resolve(), (root/cfg.get("validation",cfg["train"])).resolve()}:
-        raise ValueError("Test file overlaps training or validation")
     if target in features or cfg.get("id") in features or not features:
         raise ValueError("Features must exclude target and ID and be nonempty.")
     y = raw[target]
     if y.eq("").any() or y.nunique() < 2:
         raise ValueError("Missing labels or fewer than two classes.")
     seed = int(cfg.get("seed", 17))
-    valid_file = root / cfg["validation"] if "validation" in cfg else None
-    if valid_file and valid_file.resolve() == train_file.resolve():
-        raise ValueError("Training and validation files coincide")
-    train, valid = split_rows(raw, cfg, seed, load_csv(valid_file) if valid_file else None)
-    valid_root = valid_file.parent if valid_file else train_file.parent
-    mode = cfg.get("modality") or infer_modality(train[features])
+    validation = files.get("validation")
+    train, valid = split_rows(raw, {**cfg, "features":features}, seed, load_labeled(validation, cfg) if validation else None)
+    valid_root = validation[0].parent if validation else train_file.parent
+    pairwise = cfg.get("pairwise", False)
+    mode = cfg.get("modality") or ("text" if pairwise else infer_modality(train[features]))
+    if pairwise and (mode != "text" or len(features) != 2 or y.nunique() != 2):
+        raise ValueError("Pairwise classification requires two ordered text features and two classes")
     numeric = cfg.get("numeric", [col for col in features if len(v := train[col].replace("", np.nan).dropna())
                                   and pd.to_numeric(v, errors="coerce").notna().all()]) if mode == "table" else []
     bundle = {"spec": cfg, "mode": mode, "features": features, "numeric": numeric}
@@ -135,14 +144,16 @@ def run(args):
     out = args.out
 
     history, choices = [], list(CANDIDATES[mode])
-    if args.pool == "reviewed":
+    if pairwise:
+        choices = list(PAIR_CANDIDATES)
+    elif args.pool == "reviewed":
         from reviewed import initial_choices, action
         choices = initial_choices(mode,x)
-    if args.pool == "transfer" and mode == "image":
+    elif args.pool == "transfer" and mode == "image":
         choices.insert(1,"resnet18")
-    if args.pool == "categorical" and mode == "table":
+    elif args.pool == "categorical" and mode == "table":
         choices.insert(1,"catboost")
-    if args.pool in ("expanded","adaptive"):
+    elif args.pool in ("expanded","adaptive"):
         extra = {"table":["rbf","hist"], "text":["union","nb_ratio"], "image":["gradient_svm","cnn"]}
         choices.extend(extra[mode])
         if mode == "table" and len(train) > 5000:
@@ -155,6 +166,7 @@ def run(args):
         raise ValueError("--strategy llm requires --planner.")
     budget_key = task_key(train_file, cfg) if planner else None
     record(out / "run.jsonl", {"task": cfg, "strategy": args.strategy, "pool": args.pool, "split": cfg.get("split","stratified"), "candidates": list(choices), "mode": mode,
+           "validation_source": "supplied" if validation else "internal",
            "seed": seed, "train_rows": len(train), "valid_rows": len(valid),
            "validation_sha256": hashlib.sha256(valid.to_csv(index=False).encode()).hexdigest()})
     while choices:
@@ -163,7 +175,9 @@ def run(args):
         if best is not None and (args.strategy == "baseline" or time.monotonic()-start >= args.seconds):
             break
         name, why = rule(mode, choices, history)
-        if args.pool == "reviewed":
+        if pairwise:
+            why = PAIR_CANDIDATES[name]
+        elif args.pool == "reviewed":
             name, why = action(mode,choices,history,x,train[target])
         if args.pool == "transfer" and history and "resnet18" in choices:
             name, why = "resnet18", "Evaluate pretrained RGB features on the same validation rows."
@@ -224,6 +238,8 @@ def run(args):
             record(out / "run.jsonl", {"refit_fallback": str(exc)[:500]})
 
 def estimator(mode, name, frame, seed):
+    if name in PAIR_CANDIDATES:
+        return pair_estimator(name, seed)
     if name == "catboost":
         from catboost import CatBoostClassifier
         categories = frame.select_dtypes(exclude="number").columns.tolist()
@@ -240,6 +256,9 @@ def estimator(mode, name, frame, seed):
 def supervise(args):
     if not math.isfinite(args.seconds) or args.seconds <= 0:
         raise ValueError("Training time limit must be positive and finite")
+    score_test = getattr(args, "evaluate_test", False)
+    if score_test and not read_json(args.task).get("test"):
+        raise ValueError("--evaluate-test requires a test split in the task manifest")
     start = time.monotonic()
     args.out.mkdir(parents=True, exist_ok=False)
     env = os.environ.copy()
@@ -262,20 +281,45 @@ def supervise(args):
         raise RuntimeError("Training ended without a valid checkpoint: " + status)
     bundle = joblib.load(model_file)
     cfg = bundle["spec"]
-    if cfg.get("test"):
-        template = args.task.parent/cfg["submission_template"] if cfg.get("submission_template") else None
-        predict(bundle, args.task.parent/cfg["test"], args.out/"predictions.csv",template)
+    if score_test:
+        record(args.out / "run.jsonl", {"event": "model_selected", "candidate": bundle["candidate"],
+                                       "validation_score": bundle["validation_score"]})
+    test_metrics = None
+    if cfg.get("test") and not getattr(args, "validation_only", False):
+        with data_root(getattr(args, "data", None) or args.task.parent) as root:
+            test_file, label_file = task_files(root, cfg)["test"]
+            template = data_file(root, cfg["submission_template"]) if cfg.get("submission_template") else None
+            test_metrics = predict(bundle, test_file, args.out/"predictions.csv", template,
+                                   score_test=score_test, label_file=label_file)
     result = dict(selected=bundle["candidate"], validation_score=bundle["validation_score"],
                   status=status, seconds=round(time.monotonic()-start,4))
+    if test_metrics is not None:
+        result.update(test_metrics)
+        if args.strategy != "llm":
+            result.update(llm_calls=0, llm_cost_rmb=0)
+        (args.out / "metrics.json").write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
     record(args.out/"run.jsonl", result)
     print(json.dumps(result))
 
 
 if __name__ == "__main__":
+    selection_dir = Path(__file__).resolve().parents[1] / "experiments" / "selection"
+    commands = {"inspect":"task_intake.py", "develop":"develop.py", "validate":"validate_model.py"}
+    if sys.argv[1:2] and sys.argv[1] in commands:
+        raise SystemExit(subprocess.call([sys.executable,"-B",str(selection_dir/commands[sys.argv[1]]),*sys.argv[2:]]))
     parser = argparse.ArgumentParser()
     sub = parser.add_subparsers(dest="command", required=True)
+    sub.add_parser("inspect", help="Infer the task from its documentation and training files")
+    sub.add_parser("develop", help="Select a model using grouped training folds and confirmation")
+    sub.add_parser("validate", help="Evaluate a locked model on its supplied validation split")
     r = sub.add_parser("run")
     r.add_argument("--task", required=True, type=Path)
+    r.add_argument("--data", type=Path, help="Data directory or ZIP archive for task-relative paths")
+    evaluation = r.add_mutually_exclusive_group()
+    evaluation.add_argument("--evaluate-test", action="store_true",
+                            help="Score a labeled test split after model selection")
+    evaluation.add_argument("--validation-only", action="store_true",
+                            help="Select and save a model without reading the test split")
     r.add_argument("--out", required=True, type=Path)
     r.add_argument("--strategy", choices=["baseline", "fixed", "strong_fixed", "rule", "llm"], default="rule")
     r.add_argument("--max-trials", type=int, choices=range(1, 9),
@@ -294,6 +338,7 @@ if __name__ == "__main__":
     p.add_argument("--task", type=Path, help="Original task manifest for archived research ensembles")
     p.add_argument("--template", type=Path, help="Match sample submission ID and column order")
     p.add_argument("--input", type=Path, required=True)
+    p.add_argument("--data", type=Path, help="Data directory or ZIP archive for the prediction input")
     p.add_argument("--output", type=Path, required=True)
     a = parser.parse_args()
     if a.command == "run":
@@ -309,12 +354,21 @@ if __name__ == "__main__":
     else:
         from advanced import learners
         sys.modules.setdefault("learners", learners)
+        sys.path.append(str(selection_dir))
         bundle = joblib.load(a.model)
-        if "weights" in bundle:
-            from advanced.engine import probabilities, export
-            spec = read_json(a.task) if a.task else bundle.get("spec")
-            if spec is None:
-                raise ValueError("Pass --task for this historical ensemble")
-            export(bundle,a.input,probabilities(bundle,a.input),spec,a.output,a.template)
-        else:
-            predict(bundle, a.input, a.output,a.template)
+        with data_root(a.data or Path.cwd()) as root:
+            file = data_file(root, a.input) if a.data else a.input
+            template = data_file(root, a.template) if a.data and a.template else a.template
+            if "members" in bundle and "names" in bundle and "classes" in bundle:
+                if template:
+                    parser.error("Grouped checkpoints export prediction and per-class probabilities without a template")
+                from models import predict_file
+                predict_file(a.model,file,a.output,bundle=bundle)
+            elif "weights" in bundle:
+                from advanced.engine import probabilities, export
+                spec = read_json(a.task) if a.task else bundle.get("spec")
+                if spec is None:
+                    raise ValueError("Pass --task for this historical ensemble")
+                export(bundle,file,probabilities(bundle,file,spec),spec,a.output,template)
+            else:
+                predict(bundle, file, a.output, template)

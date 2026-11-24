@@ -8,7 +8,7 @@ AIAA 3102 期末项目。我们用同一个分类 Agent 处理表格、文本和
 
 仓库直接提供代码、整理后的示例、实验日志和预测。下文的首次表格训练可在克隆后直接运行。涉及历史模型、图像权重或原始归档的命令请在完整分享包中运行。文件校验清单对应完整包内的文件。
 
-先读同目录的《AIAA3102推荐方案与验证简报.docx》。本包是组会与开发材料。42 次本轮验证都有预测、逐候选日志和最终模型；另外保留了上一版 18 次对照的评分依据。三条研究方向和验收方式见简报第 3 页，成员可以自由认领。
+课程实测与当前入口见下方“整合版与课程任务”。早期组会材料见《AIAA3102推荐方案与验证简报.docx》。本包是组会与开发材料。42 次本轮验证都有预测、逐候选日志和最终模型；另外保留了上一版 18 次对照的评分依据。三条研究方向和验收方式见简报第 3 页，成员可以自由认领。
 
 ## 第一次运行
 
@@ -24,6 +24,45 @@ Get-FileHash runs/bank01/predictions.csv,runs/bank01/replay.csv
 ```
 
 两个哈希应相同。重新训练时换一个新的输出目录。文本可换为 `验证/movies/task-113.json`，图像可换为 `验证/cifar/task-113.json`。已有结果在对应任务的 `113-reviewed-rule` 中。运行 `Agent/start.py table` 也可以练习读入、训练与模型重放。使用推荐策略时显式传 `--pool reviewed --strategy rule`，三次候选尝试为默认上限。
+
+## 整合版与课程任务
+
+从仓库根目录运行。需要 64 位 Python 3.11，以及课程单独发放的 `final_project_tasks.zip`。训练阶段由 Agent 从 README 和训练文件识别目标、输入和指标，在训练分组上比较候选，确认后用全量训练数据拟合。两题的文件读取记录、选模理由、模型和逐行预测都保存在所指定的目录。
+
+~~~powershell
+py -3.11 -m venv .venv
+$py = ".\.venv\Scripts\python.exe"
+& $py -m pip install -r Agent/requirements.txt
+$archive = Read-Host '课程 ZIP 的完整路径'
+foreach ($task in 'headline','coupon') {
+    & $py run_course.py train $task --data $archive --runs runs/final
+    if ($LASTEXITCODE -ne 0) { throw "训练中止 $task" }
+    & $py run_course.py validate $task --data $archive --runs runs/final
+    if ($LASTEXITCODE -ne 0) { throw "验证中止 $task" }
+}
+~~~
+
+标题按共享标题组成的连通组划分。纯词/字符 TF-IDF、带写作风格的混合模型及其概率平均，都可以用相同训练分组比较。优惠券按完整相同输入分组；出现重复属性组合时，Agent 可尝试结合属性、场景和券种的模型。模型替换要求四折总体准确率提升至少 0.5 个百分点、至少三折获胜，并在训练内另留的确认集再提升至少 0.5 个百分点。
+
+只需预测时，可输入 CSV 或指向 ZIP 中的输入成员。两个课程模型都支持从同一个入口重放，输出标签和各类概率。下面用验证特征示例。
+
+~~~powershell
+& $py Agent/agent.py predict --model runs/final/coupon/model.joblib --data $archive --input final_project_tasks/in_vehicle_coupon_recommendation/C_val.npy --output runs/coupon-replay.csv
+~~~
+
+正式评测时，已锁定的模型可以通过 `Agent/agent.py validate --split test --data ... --out ...` 对指定测试划分评分。日常训练与验证使用上面的两个命令。旧版 `run --task ... --validation-only` 和旧格式集成模型仍可用于重放分支对照。旧版 `run` 省略 `--validation-only` 会读取任务清单中的测试输入。
+
+对其他分类任务，可先运行 `Agent/agent.py inspect --data 数据目录 --out 新目录` 查看字段和指标依据，再用单独的新目录启动训练。也可直接运行 `Agent/agent.py develop --data 数据目录 --out 新目录 --provider local --strengthen --train-only`。多份 README 共存时用 `--readme` 指定其中一份。训练结果记录在 `result.json`，候选和反馈记录在 `events.jsonl`。可信课程对象数组通过包装命令显式启用。上述命令使用本地规划器。
+
+[整合取舍、验证成绩和复核命令](integration-review.md)
+
+报告和工具使用记录分别见 [项目报告（验证版）](report.pdf) 和 [AI 工具使用声明](AI_USAGE.md)。报告中两道课程题的数字来自指定验证集。正式测试仍留待课程最终评测。
+
+分类输入也可以是一列相对图片路径的 CSV。图片路径以 CSV 所在目录为基准；目录及 ZIP 支持相同的训练、验证和预测命令。可运行以下检查，从本地随 scikit-learn 提供的手写数字数据开始，比较两种封装和交叉重放的逐行输出。
+
+~~~powershell
+& $py checks/verify_image_archive.py --out runs/digits-archive-check
+~~~
 
 ## 图像环境
 

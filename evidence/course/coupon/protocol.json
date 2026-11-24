@@ -1,0 +1,40 @@
+{
+  "metric": "accuracy",
+  "roles_sha256": "ffb89775d36ab5eb93bdc68139cfc233a7f0f9b9b560411e146c19611c3a3e48",
+  "planning_fit_folds": [
+    2,
+    3
+  ],
+  "planning_feedback_fold": 1,
+  "ranking_folds": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "confirmation_fold": -1,
+  "min_winning_folds": 3,
+  "confirmation_ties": "retain incumbent",
+  "initial_reference": [
+    "profile_backoff"
+  ],
+  "max_new_planning_actions": 3,
+  "repeat_seed": null,
+  "decision_check": "confirmation",
+  "minimum_gain": 0.005,
+  "scheduled": [],
+  "allowed_options": [
+    [
+      "onehot_boost"
+    ],
+    [
+      "profile_backoff"
+    ],
+    [
+      "profile_response_pool"
+    ],
+    [
+      "trees"
+    ]
+  ]
+}

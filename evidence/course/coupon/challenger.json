@@ -1,0 +1,134 @@
+{
+  "incumbent": [
+    "profile_backoff"
+  ],
+  "challenger": [
+    "profile_response_pool"
+  ],
+  "reason": "positive_total_and_three_folds",
+  "ranking_rows_by_fold": [
+    1522,
+    1522,
+    1522,
+    1521
+  ],
+  "options": [
+    {
+      "members": [
+        "profile_backoff"
+      ],
+      "correct": 4541,
+      "threshold": null,
+      "score": 0.7460160998850008,
+      "fold_scores": [
+        0.7352168199737188,
+        0.7431011826544021,
+        0.7562417871222076,
+        0.7495069033530573
+      ],
+      "by_fold": [
+        1119,
+        1131,
+        1151,
+        1140
+      ],
+      "net_by_fold": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "net": 0,
+      "score_gain": 0.0
+    },
+    {
+      "members": [
+        "profile_response_pool"
+      ],
+      "correct": 4584,
+      "threshold": null,
+      "score": 0.7530803351404632,
+      "fold_scores": [
+        0.7477003942181341,
+        0.7444152431011827,
+        0.7680683311432326,
+        0.7521367521367521
+      ],
+      "by_fold": [
+        1138,
+        1133,
+        1169,
+        1144
+      ],
+      "net_by_fold": [
+        19,
+        2,
+        18,
+        4
+      ],
+      "net": 43,
+      "score_gain": 0.007064235255462403
+    },
+    {
+      "members": [
+        "trees"
+      ],
+      "correct": 4428,
+      "threshold": null,
+      "score": 0.7274519467718088,
+      "fold_scores": [
+        0.7207621550591328,
+        0.7306176084099869,
+        0.7352168199737188,
+        0.7232084155161078
+      ],
+      "by_fold": [
+        1097,
+        1112,
+        1119,
+        1100
+      ],
+      "net_by_fold": [
+        -22,
+        -19,
+        -32,
+        -40
+      ],
+      "net": -113,
+      "score_gain": -0.01856415311319204
+    },
+    {
+      "members": [
+        "onehot_boost"
+      ],
+      "correct": 4485,
+      "threshold": null,
+      "score": 0.7368161655988171,
+      "fold_scores": [
+        0.7299605781865965,
+        0.740473061760841,
+        0.7411300919842313,
+        0.7357001972386588
+      ],
+      "by_fold": [
+        1111,
+        1127,
+        1128,
+        1119
+      ],
+      "net_by_fold": [
+        -8,
+        -4,
+        -23,
+        -21
+      ],
+      "net": -56,
+      "score_gain": -0.009199934286183709
+    }
+  ],
+  "ranking_sha256": "2d68a83588a1ea9f72a95dd5088bac95d444551d16eb2709099c070ab07540de",
+  "metric": "accuracy",
+  "minimum_gain": 0.005,
+  "incumbent_threshold": null,
+  "challenger_threshold": null
+}
