@@ -54,3 +54,5 @@ foreach ($task in 'hwu','banking_77') {
 ~~~
 
 [四题汇总、模型与预测校验值、课程文件读取记录](evidence/integration.json)
+
+后续对标题相近措辞的两个模型做了独立训练对照。两者均未达到替换门槛，交付模型继续使用原混合模型。[逐折结果与复核命令](studies/title_similarity/README.md)
