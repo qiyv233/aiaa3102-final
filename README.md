@@ -56,6 +56,14 @@ foreach ($task in 'headline','coupon') {
 
 [整合取舍、验证成绩和复核命令](integration-review.md)
 
+报告和工具使用记录分别见 [项目报告（验证版）](report.pdf) 和 [AI 工具使用声明](AI_USAGE.md)。报告中两道课程题的数字来自指定验证集。正式测试仍留待课程最终评测。
+
+分类输入也可以是一列相对图片路径的 CSV。图片路径以 CSV 所在目录为基准；目录及 ZIP 支持相同的训练、验证和预测命令。可运行以下检查，从本地随 scikit-learn 提供的手写数字数据开始，比较两种封装和交叉重放的逐行输出。
+
+~~~powershell
+& $py checks/verify_image_archive.py --out runs/digits-archive-check
+~~~
+
 ## 图像环境
 
 本轮使用 torch 2.5.1+cu121、torchvision 0.20.1+cu121。需要重现图像迁移路线时，按设备选择兼容构建。下面为 CPU 环境示例。已安装合适版本的同学只需设置权重路径。CUDA 与 CPU 的运行时间和浮点结果可能不同。

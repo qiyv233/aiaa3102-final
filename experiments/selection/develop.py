@@ -3,6 +3,7 @@ import argparse
 from decimal import Decimal
 import hashlib
 import json
+from math import sqrt
 from pathlib import Path
 import shutil
 import subprocess
@@ -25,7 +26,8 @@ def summarize(p, y, classes, slices, objective):
     breakdown={}
     for label, mask in slices.items():
         if mask.any():
-            breakdown[label]={"rows":int(mask.sum()), "accuracy":round(float(ok[mask].mean()),4)}
+            breakdown[label]={"rows":int(mask.sum()), "correct":int(ok[mask].sum()),
+                              "accuracy":round(float(ok[mask].mean()),4)}
     return {"rows":len(y),"correct":int(ok.sum()),"accuracy":round(float(ok.mean()),4),
             "metric":objective.metric,"score":objective.score(np.searchsorted(classes,y),p.argmax(1)),
             "recall_by_class_index":[round(float(ok[y==c].mean()),4) if (y==c).any() else None for c in classes],
@@ -70,8 +72,43 @@ DETAIL = {
 }
 
 
+def weaker_slice(first, second, slices):
+    """Require separated Wilson intervals before spending a pilot on a slice."""
+    bounds = {}
+    for key in (first, second):
+        sample = slices.get(key, {})
+        n = sample.get("rows", 0)
+        if not n or "correct" not in sample:
+            return None
+        p = sample["correct"] / n
+        z = 1.96
+        denominator = 1 + z*z/n
+        center = (p + z*z/(2*n)) / denominator
+        radius = z * sqrt(p*(1-p)/n + z*z/(4*n*n)) / denominator
+        bounds[key] = (center-radius, center+radius)
+    if bounds[first][1] < bounds[second][0]:
+        return first
+    if bounds[second][1] < bounds[first][0]:
+        return second
+    return None
+
+
 def local_decision(kind, actions, recent):
     slices=recent["slices"]
+    # These are hypotheses for the next pilot. Four-fold ranking and the
+    # separate training confirmation still decide which model to deploy.
+    routes = {
+        "pair": {"similar_wording": "contrast_rank", "different_wording": "framing_rank"},
+        "categorical": {"contains_rare_category": "profile_response_pool", "common_categories": "onehot_boost"},
+    }
+    if recent["metric"] == "accuracy" and kind in routes:
+        first, second = routes[kind]
+        weak = weaker_slice(first, second, slices)
+        action = routes[kind].get(weak)
+        if action in actions:
+            counts = ", ".join(f"{key} {slices[key]['correct']}/{slices[key]['rows']}" for key in (first,second))
+            evidence = f"{recent['action']} on the training feedback fold: {counts}. Lower slice: {weak} (separated 95% Wilson intervals)."
+            return action, evidence, "Test this representation against the observed errors: " + actions[action]
     for name in ("profile_response_pool","text_margin_neighbors"):
         if name in actions:
             return name,f"Reference pilot scored {recent['score']:.4f}.",DETAIL[name]
@@ -274,7 +311,6 @@ def run(args, root, out):
     summaries=[]
     predictions={}
     api_enabled=args.provider!="local"
-    planner_choices=0
     checkpoint=out/"model.joblib"
     if args.prior:
         old_bundle=joblib.load(args.prior/"model.joblib")
@@ -331,7 +367,6 @@ def run(args, root, out):
                 try:
                     action, reason=ask(read(args.planner),obs,list(offered),events,task_id)
                     decision=dict(action=action,evidence=reason,expectation=offered[action])
-                    planner_choices+=1
                 except Exception as exc:
                     api_enabled=False
                     record(event="planner_unavailable",error_type=type(exc).__name__,
@@ -394,7 +429,8 @@ def run(args, root, out):
     saved=joblib.load(checkpoint)
     history=[json.loads(l) for l in events.read_text(encoding="utf-8").splitlines()]
     result=dict(version=version.hexdigest(),selected=saved["names"],stage=saved["stage"],train_rows=len(x),
-                model_sha256=sha(checkpoint),planner=args.provider,planner_decisions=planner_choices,
+                model_sha256=sha(checkpoint),planner=args.provider,
+                planner_decisions=sum(r.get("origin") in {"local","configured"} for r in history),
                 parent_model_sha256=parent_hash,new_pilots=[n for n in predictions if n!=baseline_name],
                 run_status="refit_fallback" if any(r["event"]=="refit_failure" for r in history) else "completed",
                 **accounting(history))
@@ -424,7 +460,7 @@ def deliver_timeout(args, out):
     challenger=out/"challenger.json"
     write_json(out/"result.json",dict(run_status="timeout_checkpoint",version=start["version"],
                selected=locked,stage=saved["stage"],train_rows=start["train_rows"],
-               proposed=None,planner=args.provider,planner_decisions=sum(e.get("origin")=="configured" for e in history),
+               proposed=None,planner=args.provider,planner_decisions=sum(e.get("origin") in {"local","configured"} for e in history),
                model_sha256=sha(checkpoint),contract_sha256=sha(args.task),
                challenger_lock_sha256=sha(challenger) if challenger.is_file() else None,**accounting(history)))
     write_json(out/"timeout.json",dict(limit_seconds=args.seconds,checkpoint_stage=saved["stage"],selected=locked))

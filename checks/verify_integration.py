@@ -11,13 +11,17 @@ from zipfile import ZipFile
 import joblib
 import numpy as np
 import pandas as pd
+from PIL import Image
 from sklearn.linear_model import LogisticRegression
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT/"Agent"))
 sys.path.append(str(ROOT/"experiments/selection"))
-from agent import predict
+from agent import inputs, predict
+from develop import local_decision
+from features import build
 from models import save_bundle
+from task_data import data_file, data_root
 from validation import split_rows
 
 
@@ -34,6 +38,22 @@ def check_pairs():
         return {t.casefold() for t in part[spec["features"]].to_numpy().ravel()}
     assert not titles(train).intersection(titles(val))
     assert len(train)+len(val)==len(df)
+
+
+def check_feedback():
+    options = {name: name for name in ("pair_tfidf", "framing_rank", "contrast_rank")}
+    # Hold the overall accuracy and candidate budget fixed. Reverse only which
+    # slice contains the mistakes and verify that the next experiment changes.
+    def choose(a, b, rows, candidates=options):
+        slices = {"similar_wording": {"rows": rows, "correct": a},
+                  "different_wording": {"rows": rows, "correct": b}}
+        recent = dict(slices=slices, score=(a+b)/(2*rows), metric="accuracy", action="pair_hybrid")
+        return local_decision("pair", candidates, recent)[0]
+    assert choose(50, 90, 100) == "contrast_rank"
+    assert choose(90, 50, 100) == "framing_rank"
+    assert choose(1, 2, 2) == "pair_tfidf"
+    assert choose(70, 70, 100) == "pair_tfidf"
+    assert choose(50, 90, 100, {"pair_tfidf": "lexical baseline"}) == "pair_tfidf"
 
 
 def check_models(tmp):
@@ -91,8 +111,35 @@ def check_models(tmp):
     assert (tmp/"test-predictions.csv").exists() and "validation_score" not in scored
 
 
+def check_legacy_images(tmp):
+    folder = tmp/"images"
+    folder.mkdir()
+    names = ["dark.png", "light.png"]
+    for name, value in zip(names, (12, 240)):
+        Image.new("L", (8, 8), value).save(folder/name)
+    frame = pd.DataFrame({"image": names})
+    frame.to_csv(folder/"rows.csv", index=False)
+    archive = tmp/"image-input.zip"
+    with ZipFile(archive, "w") as z:
+        for path in folder.iterdir():
+            z.write(path, "nested/"+path.name)
+    schema = dict(mode="image", features=["image"], numeric=[])
+    x = inputs(frame, schema, folder)
+    model = build("image", "color", x, 113).fit(x, ["0","1"])
+    spec = dict(target="label", features=["image"], output="label", metric="accuracy")
+    bundle = dict(**schema, model=model, spec=spec)
+    expected, actual = tmp/"image-dir.csv", tmp/"image-zip.csv"
+    predict(bundle, folder/"rows.csv", expected)
+    with data_root(archive) as root:
+        predict(bundle, data_file(root,"nested/rows.csv"), actual)
+    assert expected.read_bytes() == actual.read_bytes()
+    assert pd.read_csv(actual, dtype=str)["label"].tolist() == ["0","1"]
+
+
 if __name__=="__main__":
     check_pairs()
+    check_feedback()
     with TemporaryDirectory() as folder:
         check_models(Path(folder))
-    print("PASS grouped pairs, ZIP cross-format replay, failed scoring and locked final export")
+        check_legacy_images(Path(folder))
+    print("PASS feedback-dependent choices, grouped pairs, ZIP cross-format replay, failed scoring and locked final export")

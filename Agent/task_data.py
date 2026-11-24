@@ -30,6 +30,24 @@ def data_file(root, name):
     return root.joinpath(*relative.parts)
 
 
+def image_inputs(frame, directory):
+    """Keep on-disk paths or load ZIP members into seekable streams for Pillow."""
+    if len(frame.columns) != 1:
+        raise ValueError("Image manifests require one path column")
+    column = frame.columns[0]
+
+    def resource(value):
+        if isinstance(value, io.BytesIO):
+            return value
+        path = data_file(directory, value)
+        if isinstance(path, Path):
+            return str(path.resolve())
+        return io.BytesIO(path.read_bytes())
+
+    frame[column] = frame[column].map(resource)
+    return frame
+
+
 def task_files(root, spec):
     """Resolve split paths and reject reuse of an input or label file across splits."""
     files = {}

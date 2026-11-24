@@ -1,0 +1,33 @@
+{
+  "version": "9a2088ab010ac025a75b19e59898e24e2f27782e13725a4a5d2b12d598fa7233",
+  "selected": [
+    "profile_response_pool"
+  ],
+  "stage": "full_refit",
+  "train_rows": 8117,
+  "model_sha256": "f0797a3e9b42555261c06db4253d00b23ffae20b408c55ec08d44b7eb3162be1",
+  "planner": "local",
+  "planner_decisions": 3,
+  "parent_model_sha256": null,
+  "new_pilots": [
+    "profile_response_pool",
+    "trees",
+    "onehot_boost"
+  ],
+  "run_status": "completed",
+  "charged_calls": 0,
+  "pending_reservations": [],
+  "recorded_cost_rmb": "0",
+  "proposed": [
+    "profile_response_pool"
+  ],
+  "metric": "accuracy",
+  "decision_threshold": null,
+  "challenger_lock_sha256": "74e0482c5110ec362bec68e5f03d4fc44520eda9e95f099a6dbcd72687de4f71",
+  "contract_sha256": "3567a5dc259dc637ec0f0b5373fb24c699f40cb90c49fd906ee65a07624889c6",
+  "validation_metric": "accuracy",
+  "validation_score": 0.767487684729064,
+  "validation_correct": 1558,
+  "validation_rows": 2030,
+  "validation_accuracy": 0.767487684729064
+}

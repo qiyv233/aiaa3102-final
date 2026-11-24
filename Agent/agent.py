@@ -16,7 +16,7 @@ from sklearn.metrics import accuracy_score, f1_score, log_loss, recall_score, ro
 from advanced.learners import candidate
 from budget import task_key
 from task_data import (
-    data_file, data_root, load_csv, load_features, load_labeled, load_labels, task_files,
+    data_file, data_root, image_inputs, load_csv, load_features, load_labeled, load_labels, task_files,
 )
 from validation import split_rows
 from submission import write_submission, validate_probabilities
@@ -35,12 +35,7 @@ def inputs(raw, bundle, root):
     for col in bundle["numeric"]:
         x[col] = pd.to_numeric(x[col], errors="coerce").replace([np.inf, -np.inf], np.nan)
     if bundle["mode"] == "image":
-        if not isinstance(root, Path):
-            raise ValueError("Image manifests require extracted image files")
-        if len(x.columns) != 1:
-            raise ValueError("Image manifests require one path column.")
-        col = x.columns[0]
-        x[col] = x[col].map(lambda p: str((root / p).resolve()))
+        return image_inputs(x, root)
     return x
 
 

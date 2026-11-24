@@ -1,6 +1,5 @@
 """Candidate families shared by checkpoint replay, timed training and prediction."""
 import hashlib
-import io
 import os
 from pathlib import Path
 import sys
@@ -23,7 +22,7 @@ from paired_text import pair_estimator, pair_groups
 from method_candidates import EditNeighbors, OrdinalCatBoost
 import representation_candidates as representations
 from objective import Objective, deployed_indices
-from task_data import load_features, load_labeled
+from task_data import image_inputs, load_features, load_labeled
 
 POOLS = {
     "pair": ("edit_odds", ["pair_hybrid", "edit_odds", "pair_tfidf", "latent_pair"]),
@@ -56,7 +55,7 @@ def features(frame, spec, directory):
     for key in spec.get("numeric", []):
         x[key] = pd.to_numeric(x[key], errors="coerce").replace([np.inf, -np.inf], np.nan)
     if spec["modality"] == "image":
-        x.iloc[:, 0] = [p if isinstance(p,io.BytesIO) else str((directory / p).resolve()) for p in x.iloc[:, 0]]
+        return image_inputs(x, directory)
     return x
 
 

@@ -1,0 +1,193 @@
+{
+  "incumbent": [
+    "pair_hybrid"
+  ],
+  "challenger": [
+    "pair_hybrid"
+  ],
+  "reason": "no_consistent_gain",
+  "ranking_rows_by_fold": [
+    1556,
+    1557,
+    1557,
+    1555
+  ],
+  "options": [
+    {
+      "members": [
+        "pair_hybrid"
+      ],
+      "correct": 4136,
+      "threshold": null,
+      "score": 0.6644176706827309,
+      "fold_scores": [
+        0.6709511568123393,
+        0.6782273603082851,
+        0.6416184971098265,
+        0.6668810289389068
+      ],
+      "by_fold": [
+        1044,
+        1056,
+        999,
+        1037
+      ],
+      "net_by_fold": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "net": 0,
+      "score_gain": 0.0
+    },
+    {
+      "members": [
+        "contrast_rank"
+      ],
+      "correct": 4122,
+      "threshold": null,
+      "score": 0.6621686746987951,
+      "fold_scores": [
+        0.660025706940874,
+        0.6788696210661529,
+        0.6435452793834296,
+        0.6662379421221865
+      ],
+      "by_fold": [
+        1027,
+        1057,
+        1002,
+        1036
+      ],
+      "net_by_fold": [
+        -17,
+        1,
+        3,
+        -1
+      ],
+      "net": -14,
+      "score_gain": -0.0022489959839357976
+    },
+    {
+      "members": [
+        "pair_tfidf"
+      ],
+      "correct": 4066,
+      "threshold": null,
+      "score": 0.6531726907630522,
+      "fold_scores": [
+        0.6426735218508998,
+        0.6576750160565189,
+        0.6409762363519589,
+        0.6713826366559486
+      ],
+      "by_fold": [
+        1000,
+        1024,
+        998,
+        1044
+      ],
+      "net_by_fold": [
+        -44,
+        -32,
+        -1,
+        7
+      ],
+      "net": -70,
+      "score_gain": -0.011244979919678766
+    },
+    {
+      "members": [
+        "pair_hybrid",
+        "contrast_rank"
+      ],
+      "correct": 4121,
+      "threshold": null,
+      "score": 0.662008032128514,
+      "fold_scores": [
+        0.6670951156812339,
+        0.6692357096981374,
+        0.642903018625562,
+        0.6688102893890675
+      ],
+      "by_fold": [
+        1038,
+        1042,
+        1001,
+        1040
+      ],
+      "net_by_fold": [
+        -6,
+        -14,
+        2,
+        3
+      ],
+      "net": -15,
+      "score_gain": -0.002409638554216942
+    },
+    {
+      "members": [
+        "pair_hybrid",
+        "pair_tfidf"
+      ],
+      "correct": 4123,
+      "threshold": null,
+      "score": 0.6623293172690763,
+      "fold_scores": [
+        0.666452442159383,
+        0.674373795761079,
+        0.6403339755940912,
+        0.6681672025723473
+      ],
+      "by_fold": [
+        1037,
+        1050,
+        997,
+        1039
+      ],
+      "net_by_fold": [
+        -7,
+        -6,
+        -2,
+        2
+      ],
+      "net": -13,
+      "score_gain": -0.0020883534136546533
+    },
+    {
+      "members": [
+        "contrast_rank",
+        "pair_tfidf"
+      ],
+      "correct": 4117,
+      "threshold": null,
+      "score": 0.6613654618473895,
+      "fold_scores": [
+        0.6568123393316195,
+        0.6698779704560052,
+        0.6435452793834296,
+        0.6752411575562701
+      ],
+      "by_fold": [
+        1022,
+        1043,
+        1002,
+        1050
+      ],
+      "net_by_fold": [
+        -22,
+        -13,
+        3,
+        13
+      ],
+      "net": -19,
+      "score_gain": -0.003052208835341408
+    }
+  ],
+  "ranking_sha256": "d998d2644e6f00be86da3ab9ade1b075221213d2233633f99a3ec45b3e3a6ffd",
+  "metric": "accuracy",
+  "minimum_gain": 0.005,
+  "incumbent_threshold": null,
+  "challenger_threshold": null
+}
